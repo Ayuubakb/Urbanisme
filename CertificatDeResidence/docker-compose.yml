@@ -1,0 +1,77 @@
+services:
+  registry_service:
+    container_name: "Residence_Eureka"
+    build: ./Backend/RegistryService
+    hostname: eureka
+    environment:
+      hostname : "eureka"
+    ports:
+      - "8761:8761"
+    networks:
+      - CertifResidence_Network
+  gateway_service:
+    container_name: "Residence_Gateway"
+    build: ./Backend/GatewayService
+    env_file: .env
+    ports:
+      - "8082:8082"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - authentication_service
+      - user_service
+  authentication_service:
+    container_name: "Residence_Auth"
+    build: ./Backend/AuthenticationService
+    env_file: .env
+    ports:
+      - "8083:8083"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - db
+  user_service:
+    container_name: "Residence_UserService"
+    build: ./Backend/UserService
+    env_file: .env
+    ports:
+      - "8084:8084"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - db
+  frontend:
+    container_name: "Residence_Front"
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - gateway_service
+  db:
+    container_name: "UrbanismeDB"
+    image: "postgres:17-alpine"
+    environment:
+      POSTGRES_USERNAME : ${DB_Username}
+      POSTGRES_PASSWORD : ${DB_Password}
+      POSTGRES_DB : ${DB_Name}
+    ports:
+      - "5432:5432"
+    volumes:
+      - CertifResidence_Volume:/var/lib/postgresql/data
+    networks:
+      - CertifResidence_Network
+
+volumes:
+  CertifResidence_Volume:
+    driver: local
+networks:
+  CertifResidence_Network:
+    driver: bridge
+
+
+
