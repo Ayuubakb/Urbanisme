@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="UserEspace" />
         <module name="RegistryService" />
-        <module name="UserService" />
         <module name="AuthenticationService" />
         <module name="GatewayService" />
       </profile>
@@ -19,7 +19,7 @@
       <module name="AuthenticationService" options="-parameters" />
       <module name="GatewayService" options="-parameters" />
       <module name="RegistryService" options="-parameters" />
-      <module name="UserService" options="-parameters" />
+      <module name="UserEspace" options="-parameters" />
     </option>
   </component>
 </project>
