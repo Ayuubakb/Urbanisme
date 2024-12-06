@@ -47,6 +47,6 @@ public class document {
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
-  private com.AuthenticationService.AuthenticationService.Model.demande demande;
+  private demande demande;
 
 }

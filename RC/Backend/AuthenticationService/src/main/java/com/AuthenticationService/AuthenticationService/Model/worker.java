@@ -19,6 +19,6 @@ public class worker {
   private float id;
   private String nom;
   private String prenom;
-  private String N_immatriculation;
+  private String matriculation;
   private String password;
 }

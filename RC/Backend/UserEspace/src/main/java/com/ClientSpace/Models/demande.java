@@ -45,7 +45,7 @@ public class demande {
   @JoinColumn(name = "id_payement", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
-  private com.AuthenticationService.AuthenticationService.Model.payement payement;
+  private payement payement;
 
 
   //the demand have one document

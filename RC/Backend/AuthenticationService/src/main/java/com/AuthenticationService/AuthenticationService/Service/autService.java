@@ -10,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class autService {
 
   @Autowired
   private final user_repo userRepo;
 
   private final worker_repo workerRepo;
+
+  public autService(user_repo userRepo, worker_repo workerRepo) {
+    this.userRepo = userRepo;
+    this.workerRepo = workerRepo;
+  }
 
   //register user
   public boolean registerUser(registerRequest request) {
@@ -55,16 +59,30 @@ public class autService {
 
   public boolean loginWorker(String n_immatriculation, String password) {
     //check if n_immatriculation exists
-    if (!workerRepo.existsByN_immatriculation(n_immatriculation)) {
+    if (!workerRepo.existsByMatriculation(n_immatriculation)) {
       return false;
     }
     //get the worker
-    worker worker = workerRepo.findByN_immatriculation(n_immatriculation);
+    worker worker = workerRepo.findByMatriculation(n_immatriculation);
     //check if the password is correct
     return passwordEncrypt.checkPassword(password, worker.getPassword());
   }
 
   public float getWorkerId(String n_immatriculation) {
-    return workerRepo.findByN_immatriculation(n_immatriculation).getId();
+    return workerRepo.findByMatriculation(n_immatriculation).getId();
+  }
+
+  public boolean changePassword(String password, float id) {
+    //check if the user exists
+    if (!userRepo.existsById(id)) {
+      return false;
+    }
+    //the user exist so we get it
+    user user = userRepo.findById(id).get();
+    //change the password
+    user.setPassword(passwordEncrypt.encrypt(password));
+    //save the user
+    userRepo.save(user);
+    return true;
   }
 }

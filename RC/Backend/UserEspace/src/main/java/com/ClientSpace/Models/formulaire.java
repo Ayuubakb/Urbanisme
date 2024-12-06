@@ -41,7 +41,7 @@ public class formulaire {
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonIgnore
   @JsonBackReference
-  private com.AuthenticationService.AuthenticationService.Model.demande demande;
+  private demande demande;
 
 
 }
