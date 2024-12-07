@@ -1,15 +1,15 @@
-package com.ClientSpace.Controllers;
+package com.UserEspace.Controllers;
 
-import com.ClientSpace.DTOs.DemandeDTO;
-import com.ClientSpace.DTOs.DocumentDTO;
-import com.ClientSpace.DTOs.FormulaireDTO;
-import com.ClientSpace.DTOs.userDto;
-import com.ClientSpace.Models.demande;
-import com.ClientSpace.Models.formulaire;
-import com.ClientSpace.Models.user;
-import com.ClientSpace.Repositories.demande_repo;
-import com.ClientSpace.Repositories.formulaire_repo;
-import com.ClientSpace.Repositories.user_repo;
+import com.UserEspace.DTOs.DemandeDTO;
+import com.UserEspace.DTOs.DocumentDTO;
+import com.UserEspace.DTOs.FormulaireDTO;
+import com.UserEspace.DTOs.userDto;
+import com.UserEspace.Models.demande;
+import com.UserEspace.Models.formulaire;
+import com.UserEspace.Models.user;
+import com.UserEspace.Repositories.demande_repo;
+import com.UserEspace.Repositories.formulaire_repo;
+import com.UserEspace.Repositories.user_repo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,23 +26,23 @@ public class UserController {
     private final formulaire_repo formulaire_repo;
 
     @GetMapping("/profile")
-    public ResponseEntity<userDto> getProfile(@RequestBody Float id) {
-        user user = user_repo.findById(id).isPresent() ? user_repo.findById(id).get() : null;
+    public ResponseEntity<userDto> getProfile(@RequestBody Long id) {
+        user user = user_repo.findById(Float.valueOf(id)).isPresent() ? user_repo.findById(Float.valueOf(id)).get() : null;
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userDto.builder().nom(user.getNom()).prenom(user.getPrenom()).build());
     }
-
     @PostMapping("/add_demande/{id}")
-    public ResponseEntity<String> addDemande(@PathVariable Float id, @RequestBody boolean is_procure) {
-        user user = user_repo.findById(id).orElse(null);
+    public ResponseEntity<String> addDemande(@PathVariable Long id, @RequestBody boolean is_procure) {
+        user user = user_repo.findById(Float.valueOf(id)).orElse(null);
         if (user == null) {
             return ResponseEntity.badRequest().body("User not found");
         }
         demande demande = new demande();
         demande.setId_user(id);
         demande.set_procureur(is_procure);
+        demande.setStatus("En cours ");
         demande savedDemande = demande_repo.save(demande);
 
         return ResponseEntity.ok("Demand ID: " + savedDemande.getId());
@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping ("/add_formulaire")
     public ResponseEntity<String> addFormulaire(@RequestBody FormulaireDTO formulaireDTO){
         formulaire formulaire = new formulaire();
-        formulaire.setId_demande(formulaireDTO.getId_demande());
+        formulaire.setId_demande((long) formulaireDTO.getId_demande());
         formulaire.setNom(formulaireDTO.getNom());
         formulaire.setPrenom(formulaireDTO.getPrenom());
         formulaire.setCin(formulaireDTO.getCin());
@@ -66,6 +66,8 @@ public class UserController {
         formulaire.setDate_creation(formulaireDTO.getDate_creation());
         formulaire.setCapital(formulaireDTO.getCapital());
         formulaire savedFormulaire = formulaire_repo.save(formulaire);
+        //update the demande and set the id_formulaire
+      demande_repo.findById(savedFormulaire.getId_demande()).get().setId_formulaire(savedFormulaire.getId());
         return ResponseEntity.ok("Formulaire saved with sucess");
     }
     @PostMapping("/add_document")
@@ -78,7 +80,7 @@ public class UserController {
     @GetMapping("/demandes/{id}")
     public ResponseEntity<List<DemandeDTO>> getDemandes(@PathVariable Float id) {
       Long userId = id.longValue();
-      List<demande> demandes = demande_repo.findAllById_user(userId);
+      List<demande> demandes = demande_repo.findAllByUserId(userId);
       if (demandes.isEmpty()) {
         return ResponseEntity.notFound().build();
       }
@@ -88,11 +90,4 @@ public class UserController {
       }
       return ResponseEntity.ok(result);
     }
-
-
-
-
-
-
-
 }

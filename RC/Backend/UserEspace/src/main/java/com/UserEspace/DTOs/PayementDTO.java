@@ -1,4 +1,4 @@
-package com.ClientSpace.DTOs;
+package com.UserEspace.DTOs;
 
 
 import lombok.Data;

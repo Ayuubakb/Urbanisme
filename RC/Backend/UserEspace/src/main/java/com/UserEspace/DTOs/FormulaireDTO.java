@@ -1,11 +1,13 @@
-package com.ClientSpace.DTOs;
+package com.UserEspace.DTOs;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Date;
 
 @Data
+@Builder
 public class FormulaireDTO {
   private float id;
   private float id_demande;

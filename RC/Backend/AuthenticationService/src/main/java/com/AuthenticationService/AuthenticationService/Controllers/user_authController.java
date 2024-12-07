@@ -6,7 +6,6 @@ import com.AuthenticationService.AuthenticationService.Repo.user_repo;
 import com.AuthenticationService.AuthenticationService.Service.autService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

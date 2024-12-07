@@ -1,11 +1,11 @@
-package com.ClientSpace.Models;
+package com.UserEspace.Models;
 
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -15,7 +15,7 @@ public class user {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private float id;
+  private Long id;
   private String nom;
   private String prenom;
   private String email;

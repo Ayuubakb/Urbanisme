@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "worker")
+@Table(name = "workers")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class worker {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private float id;
+  private Long id;
   private String nom;
   private String prenom;
   private String matriculation;

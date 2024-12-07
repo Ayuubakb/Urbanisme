@@ -1,52 +1,36 @@
-package com.ClientSpace.Models;
+package com.UserEspace.Models;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
-@Table(name = "document")
+@Table(name = "payement")
 @Getter
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class document {
-
+public class payement {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private float id;
+  private Long id;
 
-  private float id_demande;
+  private Long id_demande;
 
+  private String status;
 
-  @Lob
-  private byte[] cin_representant;
+  private Date date_payement;
 
-  @Lob
-  private byte[] declaration_immatriculation;
-
-  @Lob
-  private byte[] attestaion_inscription_taxe;
-
-  @Lob
-  private byte[] prove_domicile;
-
-  @Lob
-  private byte[] certificat_negatif;
-
-  @Lob
-  private byte[] procuration;
-
-  @Lob
-  private byte[] procureur_cin;
 
   @OneToOne
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
   private demande demande;
-
 }
