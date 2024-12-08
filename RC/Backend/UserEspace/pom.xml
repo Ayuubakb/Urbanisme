@@ -73,6 +73,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>UserEspace-SNAPSHOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

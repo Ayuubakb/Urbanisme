@@ -8,10 +8,11 @@ spring:
           uri: lb://AuthenticationService
           predicates:
             - Path=/authenticate/**
-        - id: UserService
-          uri: lb://UserService
+        - id: UserEspace
+          uri: lb://UserEspace
           predicates:
             - Path=/user/**
+            - Path=/formulaire/**
 server:
   port: 8082
 eureka:
@@ -19,6 +20,6 @@ eureka:
       register-with-eureka: true
       fetch-registry: true
       service-url:
-        defaultZone: http://localhost:8761/eureka/
+        defaultZone: ${Eureka_Url}
   instance:
-    hostname: localhost
+    hostname: ${hostname}
