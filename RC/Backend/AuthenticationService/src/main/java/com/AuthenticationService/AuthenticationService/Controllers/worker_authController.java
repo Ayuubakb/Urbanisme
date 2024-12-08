@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/worker")
+@RequestMapping("/authenticate/worker")
 @RequiredArgsConstructor
 @Controller
 public class worker_authController {

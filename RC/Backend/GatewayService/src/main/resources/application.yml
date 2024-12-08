@@ -1,20 +1,20 @@
 spring:
   application:
-    name: GatewayService
+    name: RC_GatewayService
   cloud:
     gateway:
       routes:
-        - id: AuthenticationService
-          uri: lb://AuthenticationService
+        - id: RCAuthenticationService
+          uri: lb://RCAuthenticationService
           predicates:
             - Path=/authenticate/**
-        - id: UserEspace
-          uri: lb://UserEspace
+        - id: RCUserEspace
+          uri: lb://RCUserEspace
           predicates:
             - Path=/user/**
             - Path=/formulaire/**
 server:
-  port: 8082
+  port: 8092
 eureka:
   client:
       register-with-eureka: true

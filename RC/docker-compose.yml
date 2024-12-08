@@ -2,11 +2,11 @@ services:
   registry_service:
     container_name: "RC_Eureka"
     build: ./Backend/RegistryService
-    hostname: eureka
+    hostname: ${hostname}
     environment:
-      hostname : "eureka"
+      hostname : ${hostname}
     ports:
-      - "8762:8761"
+      - "8762:8762"
     networks:
       - RC_Network
   gateway_service:
@@ -14,32 +14,45 @@ services:
     build: ./Backend/GatewayService
     env_file: .env
     ports:
-      - "8092:8082"
+      - "8092:8092"
     networks:
       - RC_Network
     depends_on:
       - registry_service
       - authentication_service
+      - user_service
   authentication_service:
     container_name: "RC_Auth"
     build: ./Backend/AuthenticationService
     env_file: .env
     ports:
-      - "8093:8083"
+      - "8093:8093"
     networks:
       - RC_Network
     depends_on:
       - registry_service
-      - db
-  db:
+      - rcdb
+  user_service:
+    container_name: "RC_userSpace"
+    build: ./Backend/UserEspace
+    env_file: .env
+    ports:
+      - "8094:8094"
+    networks:
+      - RC_Network
+    depends_on:
+      - registry_service
+      - rcdb
+  rcdb:
     container_name: "RCDB"
     image: "postgres:17-alpine"
     environment:
       POSTGRES_USERNAME : ${DB_Username}
       POSTGRES_PASSWORD : ${DB_Password}
       POSTGRES_DB : ${DB_Name}
+      POSTGRES_PORT : 5433
     ports:
-      - "5433:5432"
+      - "5433:5433"
     volumes:
       - RC_Volume:/var/lib/postgresql/data
     networks:
