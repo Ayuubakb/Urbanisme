@@ -1,4 +1,4 @@
-package com.ClientSpace.Models;
+package com.UserEspace.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,12 +16,12 @@ public class demande {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private float id;
+  private Long id;
 
-  private float id_user;
-  private float id_formulaire;
-  private float id_payement;
-  private float id_document;
+  private Long id_user;
+  private Long id_formulaire;
+  private Long id_payement;
+  private Long id_document;
   private String status;
   private String motif;
   private boolean is_procureur;

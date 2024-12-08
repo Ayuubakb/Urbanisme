@@ -1,4 +1,4 @@
-package com.ClientSpace.Models;
+package com.UserEspace.Models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,8 +20,8 @@ public class formulaire {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private float id;
-  private float id_demande;
+  private Long id;
+  private Long id_demande;
   private String nom;
   private String prenom;
   private String cin;
