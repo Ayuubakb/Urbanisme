@@ -48,5 +48,4 @@ public class document {
   @JsonBackReference
   @JsonIgnore
   private demande demande;
-
 }

@@ -21,13 +21,13 @@ public class worker_authController {
   private final autService authService;
 
   //login worker using n_immatriculation and password
- @PostMapping("/login")
-public ResponseEntity<String> loginWorker(@RequestBody workerloginrequest loginRequest) {
-  if (authService.loginWorker(loginRequest.getImmatriculation(), loginRequest.getPassword())) {
-    return ResponseEntity.ok(Float.toString(authService.getWorkerId(loginRequest.getImmatriculation())));
-  } else {
-    return ResponseEntity.badRequest().body("Login failed");
+  @PostMapping("/login")
+  public ResponseEntity<String> loginWorker(@RequestBody workerloginrequest loginRequest) {
+    if (authService.loginWorker(loginRequest.getImmatriculation(), loginRequest.getPassword())) {
+      return ResponseEntity.ok(Float.toString(authService.getWorkerId(loginRequest.getImmatriculation())));
+    } else {
+      return ResponseEntity.badRequest().body("Login failed");
+    }
   }
-}
 
 }

@@ -47,5 +47,4 @@ public class FormulaireController {
     formulaire_repo.save(formulaire);
     return ResponseEntity.ok("Formulaire updated successfully");
   }
-
 }
