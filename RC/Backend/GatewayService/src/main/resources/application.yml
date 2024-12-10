@@ -11,8 +11,7 @@ spring:
         - id: RCUserEspace
           uri: lb://RCUserEspace
           predicates:
-            - Path=/user/**
-            - Path=/formulaire/**
+            - Path=/userSpace/**
 server:
   port: 8092
 eureka:

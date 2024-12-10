@@ -43,6 +43,7 @@ services:
     depends_on:
       - registry_service
       - rcdb
+      - authentication_service
   rcdb:
     container_name: "RCDB"
     image: "postgres:17-alpine"

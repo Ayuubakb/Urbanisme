@@ -17,7 +17,6 @@ public class documentService {
   public String saveDocument(DocumentDTO documentDTO) {
     try {
       document doc = document.builder()
-          .id((long) documentDTO.getId())
           .id_demande((long) documentDTO.getId_demande())
           .cin_representant(documentDTO.getCin_representant().getBytes())
           .declaration_immatriculation(documentDTO.getDeclaration_immatriculation().getBytes())
