@@ -8,7 +8,13 @@
         <option value="$PROJECT_DIR$/Backend/GatewayService/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/RegistryService/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/AuthenticationService/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/WorkerSpace/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Backend/WorkerSpace/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="17" project-jdk-type="JavaSDK">

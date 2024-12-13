@@ -86,7 +86,8 @@
 
 .view-docs-btn,
 .modify-btn,
-.delete-btn {
+.delete-btn ,
+.view-form-btn{
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -192,4 +193,11 @@
     .view-docs-btn {
         font-size: 0.875rem;
     }
+}
+.view-form-btn {
+    background: #3b82f6;
+    color: white;
+}
+.view-docs-btn:hover {
+    background: #2563eb;
 }

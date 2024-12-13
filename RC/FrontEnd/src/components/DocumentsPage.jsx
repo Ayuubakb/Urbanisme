@@ -75,7 +75,7 @@ const DocumentPage = () => {
             <div className="error-container">
                 <div className="error">{error}</div>
                 <button onClick={() => navigate('/user/profile')} className="back-btn">
-                    ← Back
+                    ←  Retour
                 </button>
             </div>
         );
@@ -84,7 +84,7 @@ const DocumentPage = () => {
     return (
         <div className="documents-container">
             <button onClick={() => navigate('/user/profile')} className="back-btn">
-                ← Back
+                ← Retour
             </button>
             <h1>Documents</h1>
             <div className="documents-grid">

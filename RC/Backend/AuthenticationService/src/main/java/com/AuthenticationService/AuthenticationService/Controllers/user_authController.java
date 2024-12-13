@@ -5,6 +5,7 @@ import com.AuthenticationService.AuthenticationService.DTOs.passwordchangeDemand
 import com.AuthenticationService.AuthenticationService.DTOs.registerRequest;
 import com.AuthenticationService.AuthenticationService.Repo.user_repo;
 import com.AuthenticationService.AuthenticationService.Service.autService;
+import com.AuthenticationService.AuthenticationService.Service.passwordEncrypt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,21 @@ public class user_authController {
       return ResponseEntity.badRequest().body("Registration failed");
     }
   }
-
+  @PutMapping("/changePassword/{id}")
+  public ResponseEntity<String> changePassword(
+    @PathVariable("id") Long id
+    ,@RequestBody passwordchangeDemande passwordchangeDemande) {
+    String oldPassword = passwordchangeDemande.getOldPassword();
+    String newPassword = passwordchangeDemande.getNewPassword();
+    if (user_repo.findById(Float.valueOf(id)).isPresent() &&
+      com.AuthenticationService.AuthenticationService.Service.passwordEncrypt.checkPassword(oldPassword, user_repo.findById(Float.valueOf(id)).get().getPassword())) {
+      user_repo.findById(Float.valueOf(id)).get().setPassword(com.AuthenticationService.AuthenticationService.Service.passwordEncrypt.encrypt(newPassword));
+      user_repo.save(user_repo.findById(Float.valueOf(id)).get());
+      return ResponseEntity.ok("Password changed successfully");
+    } else {
+      return ResponseEntity.badRequest().body("Password change failed check your old password");
+    }
+  }
 
 
 }

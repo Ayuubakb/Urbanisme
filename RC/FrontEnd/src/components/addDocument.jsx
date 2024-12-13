@@ -103,8 +103,17 @@ const AddDocument = () => {
               </label>
               <input 
                 type="file" 
+                accept=".pdf,application/pdf"
                 name="cin_representant" 
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && !file.type.includes('pdf')) {
+                    alert('Please upload PDF files only');
+                    e.target.value = '';
+                    return;
+                  }
+                  handleFileChange(e);
+                }}
                 required
               />
             </div>
@@ -115,8 +124,17 @@ const AddDocument = () => {
               </label>
               <input 
                 type="file" 
+                accept=".pdf,application/pdf"
                 name="declaration_immatriculation" 
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && !file.type.includes('pdf')) {
+                    alert('Please upload PDF files only');
+                    e.target.value = '';
+                    return;
+                  }
+                  handleFileChange(e);
+                }}
                 required
               />
             </div>
@@ -127,8 +145,17 @@ const AddDocument = () => {
               </label>
               <input 
                 type="file" 
+                accept=".pdf,application/pdf"
                 name="attestaion_inscription_taxe" 
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && !file.type.includes('pdf')) {
+                    alert('Please upload PDF files only');
+                    e.target.value = '';
+                    return;
+                  }
+                  handleFileChange(e);
+                }}
                 required
               />
             </div>
@@ -139,8 +166,17 @@ const AddDocument = () => {
               </label>
               <input 
                 type="file" 
+                accept=".pdf,application/pdf"
                 name="prove_domicile" 
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && !file.type.includes('pdf')) {
+                    alert('Please upload PDF files only');
+                    e.target.value = '';
+                    return;
+                  }
+                  handleFileChange(e);
+                }}
                 required
               />
             </div>
@@ -151,8 +187,17 @@ const AddDocument = () => {
               </label>
               <input 
                 type="file" 
+                accept=".pdf,application/pdf"
                 name="certificat_negatif" 
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && !file.type.includes('pdf')) {
+                    alert('Please upload PDF files only');
+                    e.target.value = '';
+                    return;
+                  }
+                  handleFileChange(e);
+                }}
                 required
               />
             </div>
@@ -165,8 +210,17 @@ const AddDocument = () => {
                   </label>
                   <input 
                     type="file" 
+                    accept=".pdf,application/pdf"
                     name="procuration" 
-                    onChange={handleFileChange}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file && !file.type.includes('pdf')) {
+                        alert('Please upload PDF files only');
+                        e.target.value = '';
+                        return;
+                      }
+                      handleFileChange(e);
+                    }}
                     required
                   />
                 </div>
@@ -177,8 +231,17 @@ const AddDocument = () => {
                   </label>
                   <input 
                     type="file" 
+                    accept=".pdf,application/pdf"
                     name="procureur_cin" 
-                    onChange={handleFileChange}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file && !file.type.includes('pdf')) {
+                        alert('Please upload PDF files only');
+                        e.target.value = '';
+                        return;
+                      }
+                      handleFileChange(e);
+                    }}
                     required
                   />
                 </div>

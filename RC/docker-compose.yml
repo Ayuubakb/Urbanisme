@@ -58,7 +58,6 @@ services:
       - RC_Volume:/var/lib/postgresql/data
     networks:
       - RC_Network
-
 volumes:
   RC_Volume:
     driver: local

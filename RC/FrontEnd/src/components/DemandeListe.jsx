@@ -10,9 +10,10 @@ import {
   FaFileAlt, 
   FaEdit, 
   FaTrash, 
-  FaExclamationTriangle 
+  FaExclamationTriangle
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineFileSearch } from 'react-icons/ai'
 
 function DemandeListe() {
     const [demandes, setDemandes] = useState([]);
@@ -29,7 +30,7 @@ function DemandeListe() {
                 setError(null);
             } catch (error) {
                 if (error.response?.status === 404) {
-                    setError('Aucune demande trouvée');
+                    // setError('Aucune demande trouvée');
                 } else {
                     setError('Erreur de connexion au serveur');
                 }
@@ -49,7 +50,7 @@ function DemandeListe() {
                 setError(null);
                 console.log('Demande supprimée avec succès');
             } catch (error) {
-                setError('Erreur lors de la suppression de la demande');
+                setError('Erreur lors de la suppression de la demande'+ error);
             }
         }
     };
@@ -61,8 +62,6 @@ function DemandeListe() {
         const getStatusIcon = (status) => {
         switch(status.toLowerCase()) {
             case 'en cours ':
-                return <FaSpinner className="status-icon spinning" />;
-            case 'pending': // Added case for 'pending'
                 return <FaSpinner className="status-icon spinning" />;
             case 'approved':
                 return <FaCheck className="status-icon" />;
@@ -104,6 +103,7 @@ function DemandeListe() {
                                 <th>Procureur</th>
                                 <th>Motif</th>
                                 <th>Documents</th>
+                                <th>Formulaire</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -129,6 +129,15 @@ function DemandeListe() {
                                             className="view-docs-btn"
                                         >
                                             <FaFileAlt /> Voir les documents
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button 
+                                            onClick={() => navigate(`/formulaire/${demande.id}`)}
+                                            className="view-form-btn"
+                                        >
+                                            <AiOutlineFileSearch />  {/* or alternatives: HiOutlineDocumentSearch, IoDocumentTextOutline */}
+                                            Voir le formulaire
                                         </button>
                                     </td>
                                     <td>

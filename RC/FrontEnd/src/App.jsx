@@ -8,6 +8,8 @@ import AddFormulaire from './components/Formulaire'
 import AddDocument from './components/addDocument'
 import DocumentPage from './components/DocumentsPage'
 import Login from './components/Login'
+import UpdateDemande from './components/UpdateDemande'
+import FormulaireDetails from './components/formulaireDetails'
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/addformulaire' element={<AddFormulaire/>} />
         <Route path='/add_document' element={<AddDocument/>} />
         <Route path="/documents/:id" element={<DocumentPage />} />
+        <Route path="/modify-demande/:id" element={<UpdateDemande />} />
+        <Route path="/formulaire/:id" element={<FormulaireDetails />} />
       </Routes>
     </Router>
   )

@@ -5,5 +5,6 @@
     <file url="file://$PROJECT_DIR$/Backend/GatewayService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Backend/RegistryService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Backend/UserEspace/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend/WorkerSpace/src/main/java" charset="UTF-8" />
   </component>
 </project>

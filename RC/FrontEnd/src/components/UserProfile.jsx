@@ -8,11 +8,9 @@ import {
   FaHome,
   FaList,
   FaChevronRight,
-  FaBell,
   FaSignOutAlt,
   FaFileAlt,
   FaCog,
-  FaQuestionCircle,
 } from "react-icons/fa";
 import "./UserProfile.css";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -26,6 +24,11 @@ const UserProfile = () => {
   const [isProcuration, setIsProcuration] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -121,6 +124,55 @@ const UserProfile = () => {
     );
   }
 
+  // Replace the existing handleChangePassword function
+  const handleChangePassword = () => {
+    setShowPasswordModal(true);
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setPasswordError("");
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("New passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8092/authenticate/user/changePassword/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            'oldPassword': currentPassword,
+            'newPassword': newPassword
+        }
+        )}
+      );
+
+      if (response.ok) {
+        setShowPasswordModal(false);
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        alert("Password changed successfully");
+        //logout
+        localStorage.clear();
+        navigate("/login");
+        
+      } else {
+        setPasswordError(
+          "Failed to change password. Please check your current password."
+        );
+      }
+    } catch (error) {
+      setPasswordError("Error changing password. Please try again." + error);
+    }
+  };
+
   return (
     <>
       <div className="profile-dashboard">
@@ -150,8 +202,8 @@ const UserProfile = () => {
             <button className="nav-item active">
               <FaFileAlt /> Mes Demandes
             </button>
-            <button className="nav-item">
-              <FaCog /> Paramètres
+            <button className="nav-item" onClick={handleChangePassword}>
+              <FaCog /> Change Password
             </button>
             <button className="nav-item logout" onClick={handleLogout}>
               <FaSignOutAlt /> Déconnexion
@@ -207,6 +259,58 @@ const UserProfile = () => {
                 <FaTimes /> Non
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {showPasswordModal && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowPasswordModal(false)}
+        >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close-btn"
+              onClick={() => setShowPasswordModal(false)}
+              aria-label="Close modal"
+            >
+              <FaTimes />
+            </button>
+            <h3>Change Password</h3>
+            <form onSubmit={handlePasswordSubmit} className="password-form">
+              <div className="form-group">
+                <label>Current Password:</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>New Password:</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Confirm New Password:</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {passwordError && (
+                <div className="error-message">{passwordError}</div>
+              )}
+              <button type="submit" className="btn btn-primary">
+                Change Password
+              </button>
+            </form>
           </div>
         </div>
       )}
