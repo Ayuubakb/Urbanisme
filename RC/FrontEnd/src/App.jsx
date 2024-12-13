@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Homepage from './components/Homepage'
 import Register from './components/Register'
-import Login from './components/login'
 import Userprofile from './components/UserProfile'
 import AddFormulaire from './components/Formulaire'
 import AddDocument from './components/addDocument'
 import DocumentPage from './components/DocumentsPage'
+import Login from './components/Login'
 
 function App() {
   return (

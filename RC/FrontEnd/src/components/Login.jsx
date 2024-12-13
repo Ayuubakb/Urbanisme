@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Login.css';
-import { FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
+import { FaEnvelope, FaEyeSlash, FaLock, FaSignInAlt,FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import './login.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +13,10 @@ const Login = () => {
 
   const validateEmail = (email) => {
     return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  };
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleChange = (e) => {
@@ -101,17 +105,13 @@ const Login = () => {
 
     // Only changing the return statement for visual improvements
   
-  return (
-    <div className="login-container">
-      <div className="login-box glass-effect">
-        <div className="login-header">
-          <h2>Connexion</h2>
-          <div className="underline"></div>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <div className="input-icon">
-              <FaEnvelope className="icon" />
+    return (
+      <div className="login-container">
+        <div className="login-card">
+          <h2 className="login-title">Connexion</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <FaEnvelope className="input-icon" />
               <input
                 id="email"
                 type="email"
@@ -120,51 +120,46 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 disabled={loading}
-                className="input-field"
               />
+              {errors.email && <span className="error-message">{errors.email}</span>}
             </div>
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
-  
-          <div className="form-group">
-            <div className="input-icon">
-              <FaLock className="icon" />
+    
+            <div className="input-group">
+              <FaLock className="input-icon" />
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Mot de passe"
                 value={formData.password}
                 onChange={handleChange}
                 disabled={loading}
-                className="input-field"
               />
-            </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
-  
-          <button type="submit" disabled={loading} className="login-button">
-            {loading ? (
-              <div className="loader">
-                <span className="loader-circle"></span>
-                <span>Connexion en cours...</span>
+              <div className="show-password" onClick={toggleShowPassword}>
+                {showPassword ? <FaEyeSlash/> : <FaEye/>}
               </div>
-            ) : (
-              <>
-                <FaSignInAlt className="button-icon" /> 
-                <span>Se connecter</span>
-              </>
-            )}
-          </button>
-          {errors.submit && <div className="error-alert">{errors.submit}</div>}
-        </form>
-        <div className="register-link">
-          Vous n'avez pas de compte ?
-          <Link to="/register" className="register-button"> Inscrivez-vous</Link>
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
+    
+            <button className="login-button" type="submit" disabled={loading}>
+              {loading ? (
+                <span>Connexion en cours...</span>
+              ) : (
+                <>
+                  <FaSignInAlt /> 
+                  <span>Se connecter</span>
+                </>
+              )}
+            </button>
+            {errors.submit && <div className="error-message">{errors.submit}</div>}
+          </form>
+          <div className="register-link">
+            Vous n'avez pas de compte ?
+            <Link to="/register"> Inscrivez-vous</Link>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default Login;
