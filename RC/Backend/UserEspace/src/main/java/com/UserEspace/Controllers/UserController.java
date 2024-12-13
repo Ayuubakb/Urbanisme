@@ -1,9 +1,6 @@
 package com.UserEspace.Controllers;
 
-import com.UserEspace.DTOs.DemandeDTO;
-import com.UserEspace.DTOs.DocumentDTO;
-import com.UserEspace.DTOs.FormulaireDTO;
-import com.UserEspace.DTOs.userDto;
+import com.UserEspace.DTOs.*;
 import com.UserEspace.Models.*;
 import com.UserEspace.Repositories.demande_repo;
 import com.UserEspace.Repositories.formulaire_repo;
@@ -13,6 +10,7 @@ import com.UserEspace.Services.documentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,9 +30,10 @@ public class UserController {
   private final formulaire_repo formulaire_repo;
   private final documentService documentService;
   private final payementRepo payementRepo;
+  private final com.UserEspace.Repositories.document_repo document_repo;
 
-  @GetMapping("/profile")
-  public ResponseEntity<userDto> getProfile(@RequestBody Long id) {
+  @GetMapping("/profile/{id}")
+  public ResponseEntity<userDto> getProfile(@PathVariable Long id) {
     user user = user_repo.findById(Float.valueOf(id)).isPresent() ? user_repo.findById(Float.valueOf(id)).get() : null;
     if (user == null) {
       return ResponseEntity.notFound().build();
@@ -42,18 +41,18 @@ public class UserController {
     return ResponseEntity.ok(userDto.builder().nom(user.getNom()).prenom(user.getPrenom()).build());
   }
 
-  @PostMapping("/add_demande/{id}")
-  public ResponseEntity<String> addDemande(@PathVariable Long id, @RequestBody boolean is_procure) {
+  @PostMapping("/add_demande/{id}/{is_procure}")
+  public ResponseEntity<Long> addDemande(@PathVariable Long id, @PathVariable boolean is_procure) {
     user user = user_repo.findById(Float.valueOf(id)).orElse(null);
     if (user == null) {
-      return ResponseEntity.badRequest().body("User not found");
+      return ResponseEntity.badRequest().body(null);
     }
     demande demande = new demande();
     demande.setId_user(id);
     demande.set_procureur(is_procure);
     demande.setStatus("En cours ");
     demande savedDemande = demande_repo.save(demande);
-    return ResponseEntity.ok("Demand ID: " + savedDemande.getId());
+    return ResponseEntity.ok(savedDemande.getId());
   }
 
   @PostMapping("/add_formulaire")
@@ -100,29 +99,36 @@ public class UserController {
   }
 
   @PostMapping("/add_document")
-  public ResponseEntity<String> addDocument(@RequestParam("id_demande") float id_demande, @RequestParam("cin_representant") MultipartFile cin_representant, @RequestParam("declaration_immatriculation") MultipartFile declaration_immatriculation, @RequestParam("attestaion_inscription_taxe") MultipartFile attestaion_inscription_taxe, @RequestParam("prove_domicile") MultipartFile prove_domicile, @RequestParam("certificat_negatif") MultipartFile certificat_negatif, @RequestParam("procuration") MultipartFile procuration, @RequestParam("procureur_cin") MultipartFile procureur_cin) throws IOException {
-    DocumentDTO documentDTO = new DocumentDTO();
-    documentDTO.setId_demande(id_demande);
-    documentDTO.setCin_representant(cin_representant);
-    documentDTO.setDeclaration_immatriculation(declaration_immatriculation);
-    documentDTO.setAttestaion_inscription_taxe(attestaion_inscription_taxe);
-    documentDTO.setProve_domicile(prove_domicile);
-    documentDTO.setCertificat_negatif(certificat_negatif);
-    documentDTO.setProcuration(procuration);
-    documentDTO.setProcureur_cin(procureur_cin);
-      //save the document in the database
-    document doctosave = new document();
-    doctosave.setId_demande((long) id_demande);
-    doctosave.setCin_representant(documentDTO.getCin_representant().getBytes());
-    doctosave.setDeclaration_immatriculation(documentDTO.getDeclaration_immatriculation().getBytes());
-    doctosave.setAttestaion_inscription_taxe(documentDTO.getAttestaion_inscription_taxe().getBytes());
-    doctosave.setProve_domicile(documentDTO.getProve_domicile().getBytes());
-    doctosave.setCertificat_negatif(documentDTO.getCertificat_negatif().getBytes());
-    doctosave.setProcuration(documentDTO.getProcuration().getBytes());
-    doctosave.setProcureur_cin(documentDTO.getProcureur_cin().getBytes());
-    documentService.saveDocument(documentDTO);
-    return ResponseEntity.ok("Document added successfully " + documentService.saveDocument(documentDTO));
+public ResponseEntity<String> addDocument(
+    @RequestParam("id_demande") Long id_demande,
+    @RequestParam("cin_representant") MultipartFile cin_representant,
+    @RequestParam("declaration_immatriculation") MultipartFile declaration_immatriculation,
+    @RequestParam("attestaion_inscription_taxe") MultipartFile attestaion_inscription_taxe,
+    @RequestParam("prove_domicile") MultipartFile prove_domicile,
+    @RequestParam("certificat_negatif") MultipartFile certificat_negatif,
+    @RequestParam(value = "procuration",required = false) MultipartFile procuration,
+    @RequestParam(value = "procureur_cin",required = false) MultipartFile procureur_cin) throws IOException {
+
+  log.info("Received request to add document for demande id: " + id_demande);
+
+  demande demande = demande_repo.findById(id_demande).orElse(null);
+  if (demande == null) {
+    log.error("Demande not found for id: " + id_demande);
+    return ResponseEntity.notFound().build();
   }
+  log.info("Demande found: " + demande);
+
+  document saveddocument;
+  if (demande.is_procureur()) {
+    saveddocument = documentService.saveDocumentWithProcureur(id_demande, cin_representant, declaration_immatriculation, attestaion_inscription_taxe, prove_domicile, certificat_negatif, procuration, procureur_cin);
+  } else {
+    saveddocument = documentService.saveDocumentWithoutProcureur(id_demande, cin_representant, declaration_immatriculation, attestaion_inscription_taxe, prove_domicile, certificat_negatif);
+  }
+  demande.setId_document(saveddocument.getId());
+  demande_repo.save(demande);
+  log.info("Document saved with success");
+  return ResponseEntity.ok("Document saved with success");
+}
   //get the list of demande by user id
   @GetMapping("/demandes/{id}")
   public ResponseEntity<List<DemandeDTO>> getDemandes(@PathVariable Float id) {
@@ -184,6 +190,39 @@ public class UserController {
     //update the demande status
     demande.setId_payement(savedPayement.getId());
     return ResponseEntity.ok("Payement added successfully");
+  }
+  @Transactional
+  @PostMapping("/delete_demande/{id}")
+  public ResponseEntity<String> deleteDemande(@PathVariable Long id) {
+    demande demande = demande_repo.findById(id).isPresent() ? demande_repo.findById(id).get() : null;
+    if (demande == null) {
+      return ResponseEntity.notFound().build();
+    }
+    demande_repo.deleteDocumentByDemandeId(id);
+    demande_repo.deleteFormulaireByDemandeId(id);
+    demande_repo.deletePayementByDemandeId(id);
+    demande_repo.deleteDemandeById(id);
+    return ResponseEntity.ok("Demande deleted successfully");
+  }
+  //get document by id demande
+  @GetMapping("/get_document/{id}")
+  public ResponseEntity<documentTranser> getDocument(@PathVariable Long id) {
+    document document = document_repo.findById_demande(id).isPresent() ? document_repo.findById_demande(id).get() : null;
+    if (document == null) {
+      return ResponseEntity.notFound().build();
+    }
+    document_repo.findById_demande(id).get();
+    documentTranser documentTranser =
+    com.UserEspace.DTOs.documentTranser.builder()
+      .attestaion_inscription_taxe(document.getAttestaion_inscription_taxe())
+      .certificat_negatif(document.getCertificat_negatif())
+      .cin_representant(document.getCin_representant())
+      .declaration_immatriculation(document.getDeclaration_immatriculation())
+      .procuration(document.getProcuration())
+      .procureur_cin(document.getProcureur_cin())
+      .prove_domicile(document.getProve_domicile())
+      .build();
+    return ResponseEntity.ok(documentTranser);
   }
 
 }

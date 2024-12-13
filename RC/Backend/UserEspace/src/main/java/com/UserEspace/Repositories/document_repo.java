@@ -1,6 +1,7 @@
 package com.UserEspace.Repositories;
 
 import com.UserEspace.Models.document;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface document_repo extends JpaRepository<document, Long> {
-
+    @Transactional
     @Query(value = "SELECT * FROM document WHERE id_demande = :id_demande", nativeQuery = true)
     Optional<document> findById_demande(@Param("id_demande") Long id_demande);
 }

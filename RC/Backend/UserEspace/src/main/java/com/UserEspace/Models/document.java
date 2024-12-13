@@ -43,7 +43,7 @@ public class document {
   @Lob
   private byte[] procureur_cin;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore

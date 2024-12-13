@@ -28,7 +28,7 @@ public class payement {
   private Date date_payement;
 
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore

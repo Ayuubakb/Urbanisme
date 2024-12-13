@@ -37,7 +37,7 @@ public class formulaire {
   private float capital; // Declaration d'immatriculation
 
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonIgnore
   @JsonBackReference
