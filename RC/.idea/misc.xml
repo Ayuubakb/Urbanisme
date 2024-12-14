@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/Backend/RegistryService/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/AuthenticationService/pom.xml" />
         <option value="$PROJECT_DIR$/Backend/WorkerSpace/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/WorkerService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -10,7 +10,8 @@ import {
   FaFileAlt, 
   FaEdit, 
   FaTrash, 
-  FaExclamationTriangle
+  FaExclamationTriangle,
+  FaMoneyBill
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineFileSearch } from 'react-icons/ai'
@@ -58,15 +59,28 @@ function DemandeListe() {
     const handleModify = (id) => {
         navigate(`/modify-demande/${id}`);
     };
+    const handlePaye = async (id) => {
+        alert('do u really want to paye this demande?');
+        try {
+           const response= await axios.post(`http://localhost:8092/userSpace/add_payement/${id}`);
+            console.log(response.data);
+            window.location.reload();
+        } catch (error) {
+            setError('Erreur lors du paiement de la demande'+ error);
+        }
+    };
+
 
         const getStatusIcon = (status) => {
         switch(status.toLowerCase()) {
-            case 'en cours ':
+            case 'en cours':
                 return <FaSpinner className="status-icon spinning" />;
             case 'approved':
                 return <FaCheck className="status-icon" />;
             case 'refused':
                 return <FaTimes className="status-icon" />;
+            case 'payed':
+                return <FaMoneyBill className="status-icon paye" />;
             default:
                 return null;
         }
@@ -151,6 +165,19 @@ function DemandeListe() {
                                                     <FaEdit />
                                                 </button>
                                             )}
+                                            {
+                                                demande.status === 'approved' && (
+                                                    //a paye button
+                                                    <button 
+                                                        onClick={() => handlePaye(demande.id)}
+                                                        className="paye-btn"
+                                                        title="Payer la demande"
+                                                    >
+                                                        <FaMoneyBill />
+                                                    </button>
+                                                )
+
+                                            }
                                             <button 
                                                 onClick={() => handleDelete(demande.id)}
                                                 className="delete-btn"

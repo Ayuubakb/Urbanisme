@@ -1,21 +1,19 @@
-package com.UserEspace.Models;
-
+package com.WorkerService.WorkerService.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
-
 @Entity
-@Table(name = "payement")
+@Table(name = "document")
 @Getter
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class payement {
+public class document {
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
@@ -23,8 +21,27 @@ public class payement {
 
   private Long id_demande;
 
-  private Date date_payement;
 
+  @Lob
+  private byte[] cin_representant;
+
+  @Lob
+  private byte[] declaration_immatriculation;
+
+  @Lob
+  private byte[] attestaion_inscription_taxe;
+
+  @Lob
+  private byte[] prove_domicile;
+
+  @Lob
+  private byte[] certificat_negatif;
+
+  @Lob
+  private byte[] procuration;
+
+  @Lob
+  private byte[] procureur_cin;
 
   @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)

@@ -10,6 +10,9 @@ import DocumentPage from './components/DocumentsPage'
 import Login from './components/Login'
 import UpdateDemande from './components/UpdateDemande'
 import FormulaireDetails from './components/formulaireDetails'
+import WorkerLogin from './components/WorkerLogin'
+import WorkerProfile from './components/Worker/WorkerProfil'
+import VerifyDemande from './components/Worker/VerifyDemande'
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/documents/:id" element={<DocumentPage />} />
         <Route path="/modify-demande/:id" element={<UpdateDemande />} />
         <Route path="/formulaire/:id" element={<FormulaireDetails />} />
+        <Route path='/rekrowLogin' element={<WorkerLogin/>} />
+        <Route path='/workerProfile' element={<WorkerProfile/>} />
+        <Route path='/verify-demande/:id' element={<VerifyDemande/>} />
       </Routes>
     </Router>
   )

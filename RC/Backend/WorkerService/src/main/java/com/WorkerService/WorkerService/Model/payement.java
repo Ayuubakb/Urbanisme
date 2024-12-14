@@ -1,5 +1,4 @@
-package com.UserEspace.Models;
-
+package com.WorkerService.WorkerService.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;

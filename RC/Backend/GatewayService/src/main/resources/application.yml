@@ -12,13 +12,17 @@ spring:
           uri: lb://RCUserEspace
           predicates:
             - Path=/userSpace/**
+        - id: WorkerService
+          uri: lb://WorkerService
+          predicates:
+            - Path=/worker/**
 server:
   port: 8092
 eureka:
   client:
-      register-with-eureka: true
-      fetch-registry: true
-      service-url:
-        defaultZone: ${Eureka_Url}
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${Eureka_Url:http://localhost:8762/eureka}
   instance:
-    hostname: ${hostname}
+    hostname: ${hostname:localhost}

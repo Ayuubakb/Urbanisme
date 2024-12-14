@@ -1,6 +1,6 @@
 .demandes-container {
     padding: 2rem;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
     background: #fff;
     border-radius: 16px;
@@ -200,4 +200,11 @@
 }
 .view-docs-btn:hover {
     background: #2563eb;
+}
+.paye-btn {
+    background: #267945;
+    color: white;
+}
+.paye-btn:hover {
+    background: #1e473c;
 }

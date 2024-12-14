@@ -19,6 +19,7 @@ public class procurration_prob {
     formulaire_repo.findById_demande(id_demande).ifPresent(formulaire -> {
       demande_repo.findById(id_demande).ifPresent(demande -> {
         demande.set_procureur(formulaire.getProcuration());
+        demande.setStatus("En cours");
         demande_repo.save(demande);
       });
     });

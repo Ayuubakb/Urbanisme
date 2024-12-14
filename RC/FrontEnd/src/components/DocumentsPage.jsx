@@ -83,7 +83,7 @@ const DocumentPage = () => {
 
     return (
         <div className="documents-container">
-            <button onClick={() => navigate('/user/profile')} className="back-btn">
+            <button onClick={() => navigate(-1)} className="back-btn">
                 ← Retour
             </button>
             <h1>Documents</h1>
