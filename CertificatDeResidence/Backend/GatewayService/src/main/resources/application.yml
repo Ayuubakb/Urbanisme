@@ -12,6 +12,14 @@ spring:
           uri: lb://UserService
           predicates:
             - Path=/user/**
+        - id: GeographyService
+          uri: lb://GeographyService
+          predicates:
+            - Path=/geography/**
+        - id : DemandsService
+          uri: lb://DemandsService
+          predicates:
+            - Path=/demands/**
 server:
   port: 8082
 eureka:
@@ -19,6 +27,6 @@ eureka:
       register-with-eureka: true
       fetch-registry: true
       service-url:
-        defaultZone: ${Eureka_Url}
+        defaultZone: ${Eureka_Url:http://localhost:8761/eureka/}
   instance:
-    hostname: ${hostname}
+    hostname: ${hostname:localhost}

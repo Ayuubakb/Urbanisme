@@ -1,5 +1,6 @@
 package com.UserService.UserService.Models;
 
+import com.UserService.UserService.Enums.Type_Employe;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "employes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,21 +16,16 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String username;
+    private int id_employe;
+    private String num_immatriculation;
     private String password;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String phone;
-    private String address;
-    public User(String username, String password, String firstname, String lastname, String email, String phone, String address) {
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
+    private String nom;
+    private String prenom;
+    private String cin;
+    private String telephone;
+    @ManyToOne
+    @JoinColumn(name = "id_zone")
+    private Zone zone;
+    @Enumerated(EnumType.STRING)
+    private Type_Employe type_employe;
 }

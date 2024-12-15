@@ -3,6 +3,7 @@ WORKDIR /RegistryService
 COPY .mvn/ .mvn
 COPY --chmod=744 ./mvnw .
 COPY ./pom.xml .
+RUN ./mvnw dependency:go-offline
 COPY src/ src 
 RUN ./mvnw clean install -DskipTests
 

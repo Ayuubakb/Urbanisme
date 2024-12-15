@@ -1,0 +1,5 @@
+export const Envoyer_au_Caïd='Envoyer_au_Caïd'
+export const Refuser_par_le_Caïd='Refuser_par_le_Caïd'
+export const Enquête_en_cours='Enquête_en_cours'
+export const Refuser_par_Mqadem='Refuser_par_Mqadem'
+export const Générer='Générer'

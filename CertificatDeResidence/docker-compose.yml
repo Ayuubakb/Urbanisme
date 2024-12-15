@@ -21,6 +21,7 @@ services:
       - registry_service
       - authentication_service
       - user_service
+      - geography_service
   authentication_service:
     container_name: "Residence_Auth"
     build: ./Backend/AuthenticationService
@@ -38,6 +39,17 @@ services:
     env_file: .env
     ports:
       - "8084:8084"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - db
+  geography_service:
+    build: ./Backend/GeographyService
+    env_file: .env
+    container_name: "Residence_GeographyService"
+    ports:
+      - "8085:8085"
     networks:
       - CertifResidence_Network
     depends_on:
