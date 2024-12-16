@@ -143,7 +143,8 @@ function VerifyDemande() {
                     <div className="details-grid">
                         <section className="detail-card">
                             <h3><FaUser /> Informations Personnelles</h3>
-                            <p><strong>Nom:</strong> {formulaire.nom} {formulaire.prenom}</p>
+                            <p><strong>Nom: d'Entreprise</strong> {formulaire.nom}</p>
+                            <p><strong>Forme Juridique:</strong> {formulaire.prenom}</p>
                             <p><FaIdCard /> <strong>CIN:</strong> {formulaire.cin}</p>
                             <p><FaMapMarkerAlt /> <strong>Adresse:</strong> {formulaire.adresse}</p>
                         </section>

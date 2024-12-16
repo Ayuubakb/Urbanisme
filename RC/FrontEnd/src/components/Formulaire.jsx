@@ -41,6 +41,19 @@ function FormulaireAdd() {
     objet_commerce: "",
     capital: 0,
   });
+  const handleCancel = async (id) => {
+    if (window.confirm('Êtes-vous sûr de vouloir canceler cette demande ?')) {
+        try {
+            const response =await axios.post(`http://localhost:8092/userSpace/delete_demande/${id}`);
+            if(response.status === 200) {
+              navigate('/user/profile');
+            }
+
+        } catch (error) {
+            setError('Erreur lors de la suppression de la demande'+ error);
+        }
+    }
+};
 
   useEffect(() => {
     const initializeDemande = async () => {
@@ -128,7 +141,8 @@ function FormulaireAdd() {
         <div className="form-section">
           <h3 className="section-title">Informations Personnelles</h3>
           <div className="form-group">
-            <label><FaUser /> Nom:</label>
+            <label><FaUser /> Nom d'Entreprise:
+            </label>
             <input
               type="text"
               name="nom"
@@ -139,7 +153,8 @@ function FormulaireAdd() {
             />
           </div>
           <div className="form-group">
-            <label><FaUser /> Prénom:</label>
+            <label><FaUser /> Forme Juridique:
+            </label>
             <input
               type="text"
               name="prenom"
@@ -259,10 +274,14 @@ function FormulaireAdd() {
             </div>
           </div>
         )}
-
-        <button type="submit" className="submit-button">
-          <FaPaperPlane /> Soumettre
-        </button>
+ <div className="buttons-container">
+          <button type="submit" className="submit-button">
+            <FaPaperPlane /> Soumettre
+          </button>
+          <button onClick={() => handleCancel(demandeId)} className="cancel-button">
+            <FaTimes /> Annuler
+          </button>
+        </div>
       </form>
     </div>
   );

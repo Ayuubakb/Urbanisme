@@ -187,12 +187,16 @@
 .form-group input::placeholder {
   color: #a0aec0;
 }
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
 
-.submit-button {
-  width: 100%;
+.submit-button,
+.cancel-button {
+  flex: 1;
   padding: 1rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
   border: none;
   border-radius: 12px;
   font-weight: 600;
@@ -203,25 +207,27 @@
   justify-content: center;
   gap: 0.5rem;
   font-size: 1rem;
+  margin: 20px auto;
 }
 
-.submit-button:hover {
+.submit-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.cancel-button {
+  background: linear-gradient(135deg, #e22929 0%, #e70404 100%);
+  color: white;
+  margin: 20px auto;
+}
+
+.submit-button:hover,
+.cancel-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.submit-button:active {
+.submit-button:active,
+.cancel-button:active {
   transform: translateY(0);
 }
-
-.error-message {
-  background-color: #fff5f5;
-  border: 1px solid #fc8181;
-  color: #e53e3e;
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font

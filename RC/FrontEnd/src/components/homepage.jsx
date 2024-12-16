@@ -1,5 +1,5 @@
 import React from 'react';
-import './RegistreCommerceHomepage.css';
+import './Homepage.css';
 import { 
   FaGlobe, 
   FaLock, 

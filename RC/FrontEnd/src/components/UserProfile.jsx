@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import "./UserProfile.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import RegisterListe from "./RegisterListe";
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -24,6 +25,7 @@ const UserProfile = () => {
   const [isProcuration, setIsProcuration] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('demandes');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -199,8 +201,17 @@ const UserProfile = () => {
             )}
           </div>
           <nav className="profile-nav">
-            <button className="nav-item active">
+          <button 
+              className={`nav-item ${activeSection === 'demandes' ? 'active' : ''}`}
+              onClick={() => setActiveSection('demandes')}
+            >
               <FaFileAlt /> Mes Demandes
+            </button>
+            <button 
+              className={`nav-item ${activeSection === 'registers' ? 'active' : ''}`}
+              onClick={() => setActiveSection('registers')}
+            >
+              <FaFileAlt /> Mes Registres
             </button>
             <button className="nav-item" onClick={handleChangePassword}>
               <FaCog /> Change Password
@@ -214,18 +225,24 @@ const UserProfile = () => {
         <main className="profile-main">
           <div className="main-header">
             <h1>
-              <FaList /> Mes Demandes
+              <FaList /> {activeSection === 'demandes' ? 'Mes Demandes' : 'Mes Registres'}
             </h1>
-            <button
-              className="add-demande-button"
-              onClick={handleAddDemande}
-              title="Créer une nouvelle demande"
-            >
-              <FaPlus /> Nouvelle Demande
-            </button>
+            {activeSection === 'demandes' && (
+              <button
+                className="add-demande-button"
+                onClick={handleAddDemande}
+                title="Créer une nouvelle demande"
+              >
+                <FaPlus /> Nouvelle Demande
+              </button>
+            )}
           </div>
           <div className="demandes-wrapper">
-            <DemandeListe userId={userId} />
+            {activeSection === 'demandes' ? (
+              <DemandeListe userId={userId} />
+            ) : (
+              <RegisterListe/>
+            )}
           </div>
         </main>
       </div>

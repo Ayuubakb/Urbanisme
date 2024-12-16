@@ -5,10 +5,8 @@ import com.UserEspace.DTOs.FormulaireDTO;
 import com.UserEspace.DTOs.documentTranser;
 import com.UserEspace.DTOs.userDto;
 import com.UserEspace.Models.*;
-import com.UserEspace.Repositories.demande_repo;
-import com.UserEspace.Repositories.formulaire_repo;
-import com.UserEspace.Repositories.payementRepo;
-import com.UserEspace.Repositories.user_repo;
+import com.UserEspace.Repositories.*;
+import com.UserEspace.Services.RegisterService;
 import com.UserEspace.Services.documentService;
 import com.UserEspace.Services.procurration_prob;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/userSpace")
@@ -34,6 +33,8 @@ public class UserController {
   private final payementRepo payementRepo;
   private final com.UserEspace.Repositories.document_repo document_repo;
   private final procurration_prob procurration_prob;
+  private final register_repo register_repo;
+  private final RegisterService registerService;
 
   @GetMapping("/profile/{id}")
   public ResponseEntity<userDto> getProfile(@PathVariable Long id) {
@@ -79,7 +80,6 @@ public class UserController {
     formulaire.setNr_chronologique(formulaireDTO.getNr_chronologique());
     formulaire.setIce(formulaireDTO.getIce());
     formulaire.setObjet_commerce(formulaireDTO.getObjet_commerce());
-    formulaire.setDate_creation(null);
     formulaire.setCapital(formulaireDTO.getCapital());
     formulaire savedFormulaire = formulaire_repo.save(formulaire);
     // Update the demande and set the id_formulaire
@@ -143,7 +143,9 @@ public class UserController {
     }
     List<DemandeDTO> result = new ArrayList<>(demandes.size());
     for (demande demande : demandes) {
-      result.add(new DemandeDTO(demande));
+      if (!demande.getStatus().equals("payed")) {
+        result.add(new DemandeDTO(demande));
+      }
     }
     return ResponseEntity.ok(result);
   }
@@ -155,7 +157,7 @@ public class UserController {
     if (formulaire == null) {
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(FormulaireDTO.builder().id(formulaire.getId()).id_demande(formulaire.getId_demande()).nom(formulaire.getNom()).prenom(formulaire.getPrenom()).cin(formulaire.getCin()).procuration(formulaire.getProcuration()).adresse(formulaire.getAdresse()).nr_chronologique(formulaire.getNr_chronologique()).ice(formulaire.getIce()).benificiaire_nom(formulaire.getBenificiaire_nom()).benificiaire_prenom(formulaire.getBenificiaire_prenom()).benificiaire_cin(formulaire.getBenificiaire_cin()).objet_commerce(formulaire.getObjet_commerce()).date_creation(formulaire.getDate_creation()).capital(formulaire.getCapital()).build());
+    return ResponseEntity.ok(FormulaireDTO.builder().id(formulaire.getId()).id_demande(formulaire.getId_demande()).nom(formulaire.getNom()).prenom(formulaire.getPrenom()).cin(formulaire.getCin()).procuration(formulaire.getProcuration()).adresse(formulaire.getAdresse()).nr_chronologique(formulaire.getNr_chronologique()).ice(formulaire.getIce()).benificiaire_nom(formulaire.getBenificiaire_nom()).benificiaire_prenom(formulaire.getBenificiaire_prenom()).benificiaire_cin(formulaire.getBenificiaire_cin()).objet_commerce(formulaire.getObjet_commerce()).capital(formulaire.getCapital()).build());
   }
 
   @PutMapping("/update_formulaire/{id}")
@@ -273,10 +275,56 @@ public class UserController {
       demande.setStatus("payed");
       demande.setId_payement(payement1.getId());
       demande_repo.save(demande);
+      //create the register for the payement
+      register register = new register();
+      String code = UUID.randomUUID().toString();
+      register.setCode(code);
+      register.setId_demande(id);
+      register.setDemande(demande);
+      register register1 = register_repo.save(register);
+      //generate the register pdf
+      byte[] registerPdf = registerService.generatePdf(id);
+      register1.setFile(registerPdf);
+      register_repo.save(register1);
       return ResponseEntity.ok("Payement added successfully");
     } else {
       return ResponseEntity.badRequest().body("Demande not approved!");
     }
+  }
+
+  @GetMapping("/get_register/{id}")
+  public ResponseEntity<byte[]> getRegister(@PathVariable Long id) {
+    register register = register_repo.findByIdDemande(id);
+    if (register == null) {
+      return ResponseEntity.notFound().build();
+    }
+    // Check if the PDF file is already generated
+    byte[] registerPdf = register.getFile();
+    if (registerPdf == null || registerPdf.length == 0) {
+      // Regenerate the register PDF if not present
+      registerPdf = registerService.generatePdf(id);
+      register.setFile(registerPdf);
+      register_repo.save(register);
+    }
+    return ResponseEntity.ok()
+      .header("Content-Disposition", "attachment; filename=register.pdf")
+      .body(registerPdf);
+  }
+
+  @GetMapping("/demandes/payed/{id}")
+  public ResponseEntity<List<DemandeDTO>> getPayeddemande(
+    @PathVariable Long id) {
+    List<demande> demandes = demande_repo.findAllByUserId(id);
+    if (demandes.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+    List<DemandeDTO> result = new ArrayList<>(demandes.size());
+    for (demande demande : demandes) {
+      if (demande.getStatus().equals("payed")) {
+        result.add(new DemandeDTO(demande));
+      }
+    }
+    return ResponseEntity.ok(result);
   }
 
 

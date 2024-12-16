@@ -40,9 +40,13 @@ function FormulaireDetails() {
             <section className="details-section personal">
                 <h2><FaUser /> Informations Personnelles</h2>
                 <div className="detail-item">
-                    <span>Nom Complet:</span>
-                    <p>{`${formulaire.nom} ${formulaire.prenom}`}</p>
+                    <span>Nom d'entreprise:</span>
+                    <p>{`${formulaire.nom} `}</p>
                 </div>
+                <div className="detail-item">
+                <span>Forme Juridique:</span>
+                <p>{`${formulaire.prenom} `}</p>
+            </div>
                 <div className="detail-item">
                     <span><FaIdCard /> CIN:</span>
                     <p>{formulaire.cin}</p>
