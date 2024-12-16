@@ -14,7 +14,7 @@ const CaidLayout = () => {
     if(res.err)
       navigate("/login")
     else{
-      const resDemand=await dispatch(getZonesDemands())
+      const resDemand=await dispatch(getZonesDemands("Caïd"))
       if(resDemand.zoneNull)
         navigate("/")
     }

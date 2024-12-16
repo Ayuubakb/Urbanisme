@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/AuthenticationService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/DemandsService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/DocumentGenerationService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/GatewayService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/GeographyService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CertificatDeResidence/Backend/RegistryService/src/main/java" charset="UTF-8" />

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaFilter } from 'react-icons/fa'
 import ButtonSecondary from './ButtonSecondary'
 
-const DemandsFilter = ({setFilters,filters}) => {
+const DemandsFilter = ({setFilters,filters,setIsClicked}) => {
   const handleChange=(e)=>{
     setFilters((prev)=>{return {...prev,[e.target.name]:e.target.value}})
   }
@@ -22,7 +22,7 @@ const DemandsFilter = ({setFilters,filters}) => {
       </div>
       <div>
         <label>Trie par date:</label>
-        <select name='sort' onChange={handleChange}>
+        <select name='sortDate' onChange={handleChange}>
           <option value={"Desc"} selected>Plus récent d'abord</option>
           <option value={"Asc"}>Plus ancien d'abord</option>
         </select>
@@ -31,6 +31,7 @@ const DemandsFilter = ({setFilters,filters}) => {
         <ButtonSecondary
           text={"Chercher"}
           className={"buttonPrimary"}
+          fct={()=>setIsClicked((prev)=>!prev)}
         />
       </div>
     </div>

@@ -8,4 +8,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class StatusDTO {
     private Status status;
+    private String motif;
 }

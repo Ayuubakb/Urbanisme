@@ -35,7 +35,7 @@ const Login = () => {
     <section className='login'>
       <div className='container'>
         <div className='lock'>
-          <FaLock size={"35px"} />
+          <img src={`${process.env.REACT_APP_CLIENT_URI}Assets/fr.svg`} style={{height:"75px"}}/>
         </div>
         <form onSubmit={handleSubmit}>
           <p style={{color:"red", fontWeight:"bold", textAlign:"center",height:"25px"}}>{err!==""?err:null}</p>

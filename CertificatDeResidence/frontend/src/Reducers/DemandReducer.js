@@ -16,7 +16,7 @@ const DemandReducer=(state=initialState,action)=>{
         case GET_DEMAND_FAIL:
             return{
                 ...state,
-                demand:action.payload,
+                demand:{},
                 err:true,
             }
         default:

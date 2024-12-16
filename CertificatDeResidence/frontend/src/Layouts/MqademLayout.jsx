@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { getUser } from '../Actions/Authentication'
 import { Outlet, useNavigate } from 'react-router-dom'
-import MqademSideBar from '../Components/MqademSideBar'
+import CaidSideBar from '../Components/CaidSideBar'
 import { useDispatch } from 'react-redux'
+import { getZonesDemands } from '../Actions/Demands'
 
 const MqademLayout = () => {
   const dispatch=useDispatch()
@@ -12,6 +13,11 @@ const MqademLayout = () => {
     const res=await dispatch(getUser())
     if(res.err)
       navigate("/login")
+    else{
+      const resDemand=await dispatch(getZonesDemands("Mqadem"))
+      if(resDemand.zoneNull)
+        navigate("/")
+    }
   }
   useEffect(()=>{
     const role=localStorage.getItem("role")
@@ -21,8 +27,8 @@ const MqademLayout = () => {
       navigate("/")
   },[])
   return (
-    <section className='mqademLayout'>
-      <MqademSideBar/>
+    <section className='layout'>
+      <CaidSideBar/>
       <Outlet/>
     </section>
   )

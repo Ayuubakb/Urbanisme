@@ -106,7 +106,7 @@ const Avancement = () => {
         {
           data.motifRefus!=="" &&
             <div className='motif_refus'>
-              <h2>Pour La cause suivante:</h2>
+              <h2>Pour la cause suivante:</h2>
               <p>{data.motifRefus}</p>
             </div>
         }

@@ -17,7 +17,7 @@ const DemandsReducer=(state=initialState,action)=>{
         case GET_DEMANDS_FAIL:
             return{
                 ...state,
-                demands:action.payload,
+                demands:[],
                 err:true,
             }
         case ADD_DEMANDS_SUCCESS:

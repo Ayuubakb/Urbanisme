@@ -11,6 +11,7 @@
         <module name="UserService" />
         <module name="AuthenticationService" />
         <module name="DemandsService" />
+        <module name="DocumentGenerationService" />
         <module name="GatewayService" />
       </profile>
       <profile name="Annotation profile for GeographyService" enabled="true">
@@ -28,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AuthenticationService" options="-parameters" />
       <module name="DemandsService" options="-parameters" />
+      <module name="DocumentGenerationService" options="-parameters" />
       <module name="GatewayService" options="-parameters" />
       <module name="GeographyService" options="-parameters" />
       <module name="RegistryService" options="-parameters" />

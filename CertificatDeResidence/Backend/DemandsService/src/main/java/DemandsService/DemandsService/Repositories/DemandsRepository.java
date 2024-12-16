@@ -19,4 +19,10 @@ public interface DemandsRepository extends JpaRepository<Demandes,Integer> {
     @Modifying
     @Query("UPDATE Demandes D SET D.status=?2 WHERE D.id_demande=?1")
     Integer updateStatus(int id_demande, Status status);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Demandes D SET D.status=?2, D.motif_refus=?3 WHERE D.id_demande=?1 ")
+    Integer updateStatusAndMotif(int id_demande, Status status, String motif);
+
 }

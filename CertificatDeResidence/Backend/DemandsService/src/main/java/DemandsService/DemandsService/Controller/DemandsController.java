@@ -59,6 +59,12 @@ public class DemandsController {
         return new ResponseEntity<>(isUpdated, HttpStatus.OK);
     }
 
+    @PutMapping("/update_statusMotif/{id}")
+    public ResponseEntity<Boolean> updateDemandeStatusAndMotif(@PathVariable("id") int id, @RequestBody StatusDTO status) {
+        Boolean isUpdated=demandsServices.updateDemandStatusAndMotif(status.getStatus(),id,status.getMotif());
+        return new ResponseEntity<>(isUpdated, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/addFiles/{isMilitary}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Integer> addDemandeFiles(@PathVariable Boolean isMilitary,
                                               @RequestPart MultipartFile facture_electricite,

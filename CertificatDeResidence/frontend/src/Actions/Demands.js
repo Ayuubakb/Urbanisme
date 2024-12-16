@@ -1,6 +1,7 @@
+import { Enquête_en_cours } from "../Utils/Status"
 import { ADD_DEMANDS_FAIL, ADD_DEMANDS_SUCCESS, GET_DEMANDS_FAIL, GET_DEMANDS_SUCCESS,GET_DEMAND_FAIL, GET_DEMAND_SUCCESS } from "./types"
 
-export const getZonesDemands=()=>async dispatch=>{
+export const getZonesDemands=(role)=>async dispatch=>{
     const zone_id=localStorage.getItem("id_zone")
     if(zone_id!=null){
         const response=await fetch(`${process.env.REACT_APP_SERVER_URI}demands/get_zone/${zone_id}`,{
@@ -13,7 +14,9 @@ export const getZonesDemands=()=>async dispatch=>{
             })
             return {isFetched:false,err:"Une Erreur est survenu"}
         }
-        const data=await response.json();
+        let data=await response.json();
+        if(role==="Mqadem")
+            data=data.filter((d)=> d.status===Enquête_en_cours )
         dispatch({
             type:GET_DEMANDS_SUCCESS,
             payload:data
@@ -103,4 +106,40 @@ export const getDemandById=(id_demand)=>async dispatch=>{
         payload:data
     })
     return {isFetched:true}
+}
+export const changeStatus=(status,id_demand)=> async dispatch=>{
+    const response=await fetch(`${process.env.REACT_APP_SERVER_URI}demands/update_status/${id_demand}`,{
+        method:'PUT',
+        body:JSON.stringify({status:status,motif:""}),
+        headers:{
+            'Content-Type':'application/json'
+        },
+        credentials:'include'
+    })
+    if(!response.ok){
+        return {isUpdated:false,err:"Une Erreur est survenu"}
+    }
+    const data=await response.text();
+    console.log(data);
+    if(data)
+        return {isUpdated:true}
+    return {isUpdated:false}
+}
+export const changeStatusAndMotif=(status,id_demand,motif)=> async dispatch=>{
+    const response=await fetch(`${process.env.REACT_APP_SERVER_URI}demands/update_statusMotif/${id_demand}`,{
+        method:'PUT',
+        body:JSON.stringify({status:status,motif:motif}),
+        headers:{
+            'Content-Type':'application/json'
+        },
+        credentials:'include'
+    })
+    if(!response.ok){
+        return {isUpdated:false,err:"Une Erreur est survenu"}
+    }
+    const data=await response.text();
+    console.log(data);
+    if(data)
+        return {isUpdated:true}
+    return {isUpdated:false}
 }

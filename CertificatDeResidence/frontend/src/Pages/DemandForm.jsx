@@ -106,7 +106,7 @@ const DemandForm = () => {
     <section className='demandForm'>
       <div className='container'>
         <ProgressionLine currentStep={currentStep} steps={steps}/>
-        <p style={{height:"25px",textAlign:"center",color:"red"}}>{err}</p>
+        <p style={{width:"100%",height:"25px",textAlign:"center",color:"red"}}>{err}</p>
         { currentStep===1 &&
           <div className='Form1'>
             <div className='flexContainer'>

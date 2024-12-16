@@ -1,4 +1,4 @@
-import { GET_USER_FAIL, GET_USER_SUCCESS } from "./types"
+import { GET_DEMAND_FAIL, GET_DEMANDS_FAIL, GET_USER_FAIL, GET_USER_SUCCESS, GET_USERS_FAIL } from "./types"
 
 export const login=(loginInputs)=>async dispatch=>{
     const response=await fetch(`${process.env.REACT_APP_SERVER_URI}authenticate/login`,{
@@ -25,6 +25,22 @@ export const login=(loginInputs)=>async dispatch=>{
         payload:data
     })
     return {isLogged:true,userRole:data.type_employe}
+}
+export const logout=()=>dispatch=>{
+    localStorage.setItem("userId",null);
+    localStorage.setItem("id_zone",null);
+    localStorage.setItem("role",null)
+    localStorage.clear()
+    dispatch({
+        type:GET_USER_FAIL,
+    })
+    dispatch({
+        type:GET_DEMANDS_FAIL,
+    })
+    dispatch({
+        type:GET_DEMAND_FAIL,
+    })
+    return true;
 }
 export const getUser=()=>async dispatch=>{
     const userId=localStorage.getItem("userId")

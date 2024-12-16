@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/CertificatDeResidence/Backend/RegistryService/pom.xml" />
         <option value="$PROJECT_DIR$/CertificatDeResidence/Backend/GatewayService/pom.xml" />
         <option value="$PROJECT_DIR$/CertificatDeResidence/Backend/DemandsService/pom.xml" />
+        <option value="$PROJECT_DIR$/CertificatDeResidence/Backend/DocumentGenerationService/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { FaLeftLong, FaRightLong } from 'react-icons/fa6'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDemandById } from '../Actions/Demands'
+import { changeStatus, changeStatusAndMotif, getDemandById, getZonesDemands } from '../Actions/Demands'
 import Waiting from '../Components/Waiting'
+import { Enquête_en_cours, Envoyer_au_Caïd, Refuser_par_le_Caïd } from '../Utils/Status'
 
 const OneDemand = () => {
   const dispatch=useDispatch()
@@ -11,7 +12,8 @@ const OneDemand = () => {
   const [curent,setCurrent]=useState(0)
   const [isFetched,setIsFetched]=useState(null)
   const [isMilitary,setIsMilitary]=useState(null)
-  console.log(files[curent])
+  const [isRefused,setIsRefused]=useState(false)
+  const [motif,setMotif]=useState('')
   const getDemand=async()=>{
     const url=new URL(window.location.href).pathname
     const id_demand=url.split('/')[3]
@@ -52,9 +54,31 @@ const OneDemand = () => {
         setIsMilitary(false)
     }
   },[isFetched])
-  const showPic=()=>{
-    const selectedFile=files[curent]
-    return <embed id='doc' type={selectedFile.type} src={`data:${selectedFile.type};base64,${selectedFile.src}`}/>
+  const handleRefuse=()=>{
+    setIsRefused(true)
+  }
+  const handleCancel=()=>{
+    setIsRefused(false)
+  }
+  const handleAccept=async()=>{
+    const url=new URL(window.location.href).pathname
+    const id_demand=url.split('/')[3]
+    const res=await dispatch(changeStatus(Enquête_en_cours,id_demand))
+    if(res.isUpdated){
+      setIsFetched(null)
+      getDemand()
+      await dispatch(getZonesDemands())
+    }
+  }
+  const handleConfirmRefuse=async()=>{
+    const url=new URL(window.location.href).pathname
+    const id_demand=url.split('/')[3]
+    const res=await dispatch(changeStatusAndMotif(Refuser_par_le_Caïd,id_demand,motif))
+    if(res.isUpdated){
+      setIsFetched(null)
+      getDemand()
+      await dispatch(getZonesDemands())
+    }
   }
   const handleNext=()=>{
     if(curent!==files.length - 1)
@@ -63,6 +87,30 @@ const OneDemand = () => {
   const handlePrev=()=>{
     if(curent!==0)
       setCurrent((prev)=>prev-1)
+  }
+  const genereateStatus=(status)=>{
+    let tag;
+    switch(status){
+      case "Envoyer_au_Caïd":
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'gray'}}>En Attente</h1>
+        break;
+      case "Refuser_par_le_Caïd":
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'red'}}>Refus(1ère étape)</h1>
+        break;
+      case "Enquête_en_cours":
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'black'}}>Enquête en cours</h1>
+        break;
+      case "Refuser_par_Mqadem":
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'read'}}>Refus(2éme étape)</h1>
+        break;
+      case "Générer":
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'green'}}>Envoyée</h1>
+        break;
+      default :
+        tag=<h1 style={{borderRadius:'10px',padding:'10px',marginTop:'55px',color:"white",backgroundColor:'green'}}>Envoyée</h1>
+        break ;
+    }
+    return tag;
   }
   if(isFetched===null || isMilitary===null)
     return  <section className='outlet oneDemand'><Waiting/></section>
@@ -91,17 +139,48 @@ const OneDemand = () => {
             <label>Réference de payement :</label>
             <p>{demand.payment_reference}</p>
           </div>
-          <div className='btnContainer'>
-            <button style={{backgroundColor:'red'}}>Refuser</button>
-            <button style={{backgroundColor:'rgb(201, 172, 70)'}}>Affecter Au Mqadem</button>
-          </div>
+          {
+            demand.status!==Envoyer_au_Caïd?
+              <>{genereateStatus(demand.status)}</>:
+            !isRefused?
+            <div className='btnContainer'>
+              <button style={{backgroundColor:'red'}} onClick={handleRefuse}>Refuser</button>
+              <button style={{backgroundColor:'rgb(201, 172, 70)'}} onClick={handleAccept}>Affecter Au Mqadem</button>
+            </div>:
+            <div className='motif'>
+              <textarea value={motif} onChange={(e)=>setMotif(e.target.value)}>
+
+              </textarea>
+              <button onClick={handleConfirmRefuse}>
+                Confirmer
+              </button>
+              <button style={{backgroundColor:"gray"}} onClick={handleCancel}>
+                Annuler
+              </button>
+            </div>
+          }
         </div>  
         <div className='docs'>
           <div className='ctn'>
             <div className='arrow left' onClick={handlePrev}>
               <FaLeftLong size="35px" className='icon'/>
             </div>
-            {showPic()}
+            <div className="slides-container">
+              {files.map((file, index) => (
+                <div
+                  className={index === curent ? 'slide active' : 'slide'}
+                  key={index}
+                  style={{ transform: `translateX(-${curent * 100}%)` }}
+                >
+                  <embed
+                    className="file-preview"
+                    id="doc"
+                    type={file.type}
+                    src={`data:${file.type};base64,${file.src}`}
+                  />
+                </div>
+              ))}
+            </div>
             <div  className='arrow right' onClick={handleNext}>
               <FaRightLong size="35px" className='icon'/>
             </div>

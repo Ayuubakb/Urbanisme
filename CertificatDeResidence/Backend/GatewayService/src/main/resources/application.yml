@@ -20,6 +20,10 @@ spring:
           uri: lb://DemandsService
           predicates:
             - Path=/demands/**
+        - id: DocumentGenerationService
+          uri: lb://DocumentGenerationService
+          predicates:
+            - Path=/generate/**
 server:
   port: 8082
 eureka:

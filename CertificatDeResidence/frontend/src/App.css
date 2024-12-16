@@ -94,6 +94,7 @@
     color: rgb(45, 45, 45);
     line-height: 38px;
     font-size: 18px;
+    margin-bottom: 25px;
 }
 .buttonPrimary{
     background-color: var(--color-secondaire);
@@ -328,11 +329,11 @@
     padding: 30px;
     border-radius: 25px;
 }
-.progression-container {
+/*.progression-container {
     width: 80%;
     margin: 2rem auto;
     text-align: center;
-    }
+}
 
     .progress-bar {
     display: flex;
@@ -364,31 +365,84 @@
 
     .label {
     margin-top: 0.5rem;
-    font-size: 14px;
+    font-size: 16px;
+    font-family: var(--font-big);
     }
 
     .step.active .circle {
-    background: #4caf50;
+    background: var(--blue);
     color: white;
     }
 
-    .step:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    width: calc(100% - 40px);
-    height: 4px;
-    background: #ddd;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
-    transition: 0.3s;
-    }
+.line {
+    width: 100px;
+    height: 5px;
+    background-color: #ccc;
+    margin: 0 10px;
+  }
+  
+  .line.filled {
+    background-color: #4caf50;
+  }*/
 
-    .step.active ~ .step::after,
-    .step.active .circle + .label::after {
-    background: #4caf50;
-    }
+  .progression-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .step-container {
+    display: flex;
+    align-items: center;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: var(--font-big);
+  }
+  
+  .step.active .circle {
+    background-color: var(--color-secondaire);
+  }
+  .label {
+    margin-top: 8px;
+    font-size: 16px;
+    font-family: var(--font-big)
+  }
+  
+  .line {
+    width: 100px;
+    height: 5px;
+    background-color: #ccc;
+    margin: 0 10px;
+  }
+  
+  .line.filled {
+    background-color: var(--color-secondaire);
+  }
 
 .demandForm{
     position: relative;
@@ -449,7 +503,7 @@
 }
 .demandForm .fileContainer{
     position: relative;
-    background-color: var(--color-nav);
+    background-color: var(--color-secondaire);
     padding: 25px;
     margin-bottom: 20px;
     width: 100%;
@@ -511,6 +565,10 @@
 .demandForm .codeSuivie h2 span{
     color: var(--blue);
     text-decoration: underline;
+}
+.demandForm .container .progression-container{
+    width: 100%;
+    margin-left: 175px;
 }
 .waiting{
     position: absolute;
@@ -634,6 +692,20 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
+.avancement .motif_refus{
+    border: solid 2px var(--blue);
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #dbdbdb;
+}
+.avancement .motif_refus h1{
+    font-family: var(--font-big);
+}
+.avancement .motif_refus p{
+    font-family: var(--font-small);
+    font-style: italic;
+    padding-left: 50px;
+}
 .avBanner{
     width: 600px;
     position:fixed;
@@ -674,18 +746,27 @@
 }
 .SideBar{
     flex:0 0 300px;
-    background-color: rgb(121, 121, 121);
-    border-right: solid 1px var(--color-nav);
-    color: white;
+    background-color: rgb(243, 243, 243);
+    color: black;
 }
 .SideBar .infos{
     text-align: center;
-    height: 20vh;
+    height: 30vh;
     padding-top: 20px;
 }
 .SideBar .infos h1{
     font-family: var(--font-big);
     margin-bottom: 20px;
+}
+.SideBar .imgContainer{
+    width: 100%;
+    height: 10vh;
+    margin-bottom: 25px;
+}
+.SideBar .imgContainer img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .SideBar .infos div p{
     font-family: var(--font-small);
@@ -696,23 +777,23 @@
 }
 .SideBar .paths{
     padding-top: 30px;
-    height: 70vh;
+    height: 60vh;
 }
 .SideBar .paths .path{
     padding-inline: 25px;
     display: flex;
     width: 100%;
     border-bottom: solid 1px var(--color-secondaire);
+    border-top: solid 1px var(--color-secondaire);
     padding-top: 17px;
     padding-bottom: 17px;
-    background-color: rgb(93, 93, 93);
     align-items: center;
     padding-left: 20px;
     cursor: pointer;
 }
 .SideBar .paths .path p{
     font-family: var(--font-small);
-    color: white;
+    color: var(--color-secondaire);
     padding-left: 20px;
 }
 .SideBar .offButton{
@@ -720,6 +801,15 @@
 }
 .SideBar .offButton{
     text-align: center;
+}
+.SideBar .offButton p{
+    padding: 15px;
+    font-family: var(--font-big);
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    width: 75%;
+    margin-left: 12.5%;
 }
 .SideBar .offButton div{
     background-color: black;
@@ -790,7 +880,7 @@
   
   /* Action Icon */
   .tableDemande td svg {
-    color: var(--blue);
+    color: var(--color-secondaire);
     font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
@@ -849,9 +939,9 @@
     align-items: center;
 }
 .oneDemand .container .citoyenInputs{
-    flex:  0 0 35%;
+    flex:  0 0 50%;
     border: solid 1px var(--color-secondaire);
-    padding: 20px;
+    padding: 50px;
     border-radius: 25px;
 }
 .oneDemand .container .citoyenInputs h1{
@@ -861,6 +951,27 @@
     margin-top: 20px;
     font-size: 27px;
     color: var(--color-secondaire);
+}
+.oneDemand .container .citoyenInputs textarea{
+    width: 100%;
+    padding: 3px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    font-family: var(--font-small);
+}
+.oneDemand .container .citoyenInputs .motif{
+    gap: 15px;
+    margin-top: 55px;
+}
+.oneDemand .container .citoyenInputs .motif button{
+    border-radius: 10px;
+    border: none;
+    background-color: red;
+    color: white;
+    font-family: var(--font-big);
+    flex: 0 0 75px;
+    height: 75px;
+    cursor: pointer;
 }
 .oneDemand .container label{
     font-weight: bold;
@@ -874,8 +985,7 @@
     color: rgb(65, 65, 65);
 }
 .oneDemand .container .docs{
-    flex:  0 0 55%;
-    position: relative;
+    flex:  0 0 45%;
 }
 .oneDemand .container .citoyenInputs div{
     display: flex;
@@ -886,6 +996,7 @@
     height: 600px;
     border: solid 3px gray;
     border-bottom: none;
+    position: relative;
 }
 .oneDemand .container .docs .docName{
     background-color: black;
@@ -903,6 +1014,7 @@
     margin-top: 55px;
     display: flex;
     justify-content: space-around;
+    height: 75px;
 }
 .oneDemand .container .btnContainer button{
     border: none;
@@ -914,18 +1026,20 @@
     color: white;
     cursor: pointer;
     width: 35%;
+    height: 50px;
 }
 .oneDemand .container .arrow{
     position: absolute;
     top: 50%;
     transform: translateX(-50%);
-    color: var(--color-secondaire);
+    color: white;
     width: 40px;
     height: 40px;   
     background-color: black;
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    z-index: 3;
 }
 .oneDemand .container .icon{
     position: absolute;
@@ -937,5 +1051,41 @@
     left: 0%;
 }
 .oneDemand .container .right{
-    right: -7%;
+    right: -8%;
+}
+.oneDemand .slides-container{
+    display: flex;
+    overflow: hidden;
+    height: 100%;
+}
+.oneDemand .slides-container div{
+    flex: 0 0 100%;
+    height: 100%;
+}
+.noDemande{
+    margin-top: 75px;
+    padding: 15px;
+    background-color: var(--color-secondaire);
+    color: white;
+    font-family: var(--font-big);
+    font-size: 28px;
+    border-radius: 15px;
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+}
+.checkRefuse{
+    margin-right: 25px;
+}
+
+.avBanner textarea{
+    border: solid 1px var(--blue);
+    padding: 7px;
+    width: 100%;
+    height: 75px;
+    margin-bottom: 25px;
+    margin-top: 30px;
+    border-radius: 15px;
+    outline: none;
+    font-family: var(--font-small);
 }

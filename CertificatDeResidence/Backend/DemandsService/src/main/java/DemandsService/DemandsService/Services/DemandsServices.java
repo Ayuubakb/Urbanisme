@@ -106,6 +106,17 @@ public class DemandsServices {
         return c==1;
     }
 
+    public Boolean updateDemandStatusAndMotif(Status status, int id_demande,String motif){
+        int c;
+        try{
+            c=demandsRepository.updateStatusAndMotif(id_demande,status,motif);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return c==1;
+    }
+
     public Integer addDemand(Demandes demande, int id_file){
         Demandes savedDemand;
         demande.setFile(new Files(id_file));
