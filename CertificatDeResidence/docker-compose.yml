@@ -22,6 +22,8 @@ services:
       - authentication_service
       - user_service
       - geography_service
+      - demands_service
+      - documents_service
   authentication_service:
     container_name: "Residence_Auth"
     build: ./Backend/AuthenticationService
@@ -55,9 +57,32 @@ services:
     depends_on:
       - registry_service
       - db
+  demands_service:
+    build: ./Backend/DemandsService
+    env_file: .env
+    container_name: "Residence_demndsService"
+    ports:
+      - "8086:8086"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - db
+  documents_service:
+    build: ./Backend/DocumentGenerationService
+    env_file: .env
+    container_name: "Residence_documentsService"
+    ports:
+      - "8087:8087"
+    networks:
+      - CertifResidence_Network
+    depends_on:
+      - registry_service
+      - db
   frontend:
     container_name: "Residence_Front"
     build: ./frontend
+    env_file: .env
     ports:
       - "3000:3000"
     networks:
@@ -74,7 +99,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./initCR.sql:/docker-entrypoint-initdb.d/init.sql
       - CertifResidence_Volume:/var/lib/postgresql/data
     networks:
       - CertifResidence_Network

@@ -87,6 +87,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>DocumentGenerationService-SNAPSHOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
