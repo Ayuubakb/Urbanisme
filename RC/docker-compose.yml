@@ -43,6 +43,7 @@ services:
     depends_on:
       - registry_service
       - rcdb
+      - authentication_service
   rcdb:
     container_name: "RCDB"
     image: "postgres:17-alpine"
@@ -57,13 +58,20 @@ services:
       - RC_Volume:/var/lib/postgresql/data
     networks:
       - RC_Network
-
+  worker_service:
+    container_name: "RCWorkerService"
+    build: ./Backend/WorkerService
+    env_file: .env
+    ports:
+      - "8095:8095"
+    networks:
+      - RC_Network
+    depends_on:
+      - registry_service
+      - rcdb
 volumes:
   RC_Volume:
     driver: local
 networks:
   RC_Network:
     driver: bridge
-
-
-

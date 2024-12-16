@@ -1,0 +1,138 @@
+.demandes-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.demandes-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.demandes-header h1 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.demandes-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.demandes-table th {
+    background: #f8fafc;
+    padding: 1rem;
+    text-align: left;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.demandes-table td {
+    padding: 1rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.demandes-table button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.view-docs-btn {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.view-docs-btn:hover {
+    background: #e2e8f0;
+}
+
+.view-form-btn {
+    background: #f0f9ff;
+    color: #0369a1;
+}
+
+.view-form-btn:hover {
+    background: #e0f2fe;
+}
+
+.check-btn {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.check-btn:hover {
+    background: #d1fae5;
+}
+
+.mail-btn {
+    background: #4a90e2;
+    color: white;
+}
+
+.mail-btn:hover {
+    background: #357abd;
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    color: #64748b;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fef2f2;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.no-demandes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+    color: #64748b;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.no-demandes svg {
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}

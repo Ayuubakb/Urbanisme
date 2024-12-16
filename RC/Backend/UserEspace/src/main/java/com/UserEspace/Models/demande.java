@@ -27,13 +27,13 @@ public class demande {
   private boolean is_procureur;
 
   //a user can have many demands
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_user", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
   private user user;
 
-  @ManyToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_formulaire", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
@@ -41,7 +41,7 @@ public class demande {
 
 
   //the demand have one payement
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_payement", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore
@@ -49,7 +49,7 @@ public class demande {
 
 
   //the demand have one document
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_document", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonBackReference
   @JsonIgnore

@@ -1,5 +1,6 @@
 package com.AuthenticationService.AuthenticationService.Service;
 
+import com.AuthenticationService.AuthenticationService.DTOs.passwordchangeDemande;
 import com.AuthenticationService.AuthenticationService.DTOs.registerRequest;
 import com.AuthenticationService.AuthenticationService.Model.user;
 import com.AuthenticationService.AuthenticationService.Model.worker;
@@ -8,6 +9,8 @@ import com.AuthenticationService.AuthenticationService.Repo.worker_repo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class autService {
@@ -72,17 +75,4 @@ public class autService {
     return workerRepo.findByMatriculation(n_immatriculation).getId();
   }
 
-  public boolean changePassword(String password, float id) {
-    //check if the user exists
-    if (!userRepo.existsById(id)) {
-      return false;
-    }
-    //the user exist so we get it
-    user user = userRepo.findById(id).get();
-    //change the password
-    user.setPassword(passwordEncrypt.encrypt(password));
-    //save the user
-    userRepo.save(user);
-    return true;
-  }
 }

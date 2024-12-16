@@ -33,11 +33,10 @@ public class formulaire {
   private String benificiaire_prenom;
   private String benificiaire_cin;
   private String objet_commerce;
-  private Date date_creation;
   private float capital; // Declaration d'immatriculation
 
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   @JoinColumn(name = "id_demande", referencedColumnName = "id", insertable = false, updatable = false)
   @JsonIgnore
   @JsonBackReference
