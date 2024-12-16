@@ -3,12 +3,15 @@ package DocumentsGenerationService.DocumentGenerationService.Services;
 
 import DocumentsGenerationService.DocumentGenerationService.Model.Demandes;
 import DocumentsGenerationService.DocumentGenerationService.Repositories.DemandRepository;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,34 +44,47 @@ public class GenerationService {
 
             // Set up fonts
             PdfFont timesRoman = PdfFontFactory.createFont();
-
+            String logoPath = getClass().getClassLoader().getResource("static/logo.jpeg").getPath();
+            Image logo = new Image(ImageDataFactory.create(logoPath))
+                    .scaleToFit(130, 130)
+                    .setHorizontalAlignment(HorizontalAlignment.CENTER)
+                    .setMarginBottom(20);
+            document.add(logo);
             // Add header
-            document.add(new Paragraph("Certificat de residence")
+            document.add(new Paragraph("CERTIFICAT DE RÉSIDENCE")
+                    .setFont(timesRoman)
+                    .setFontSize(18)
+                    .setBold()
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setMarginBottom(30));
+            // Prepare form data
+            HashMap<String,String> formData = prepareFormData(id_demande);
+
+            // Add form data
+            String content = "Je soussigné, certifie que :\n\n" +
+                    "Nom : " + formData.get("Nom") + "\n" +
+                    "Prénom : " + formData.get("Prénom") + "\n" +
+                    "CIN : " + formData.get("CIN") + "\n" +
+                    "Adresse : " + formData.get("Adresse") + "\n\n" +
+                    "Réside actuellement dans la région concernée.\n" +
+                    "Ce certificat est délivré pour servir et valoir ce que de droit.";
+
+            document.add(new Paragraph(content)
+                    .setFont(timesRoman)
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.LEFT));
+            // Add footer
+            document.add(new Paragraph("Délivré pour servir et valoir ce que de droit.")
                     .setFont(timesRoman)
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT));
 
-            // Add title
-            document.add(new Paragraph("C")
-                    .setFont(timesRoman)
-                    .setFontSize(10)
-                    .setTextAlignment(TextAlignment.LEFT));
-
-            // Prepare form data
-            List<String> formData = prepareFormData(id_demande);
-
-            // Add form data
-            for (String dataLine : formData) {
-                document.add(new Paragraph(dataLine)
-                        .setFont(timesRoman)
-                        .setFontSize(10));
-            }
-
-            // Add footer
-            document.add(new Paragraph("Délivré pour servir et valoir ce que de droit.")
-                    .setFont(timesRoman)
-                    .setFontSize(8)
-                    .setTextAlignment(TextAlignment.LEFT));
+            String tmpPath = getClass().getClassLoader().getResource("static/tamp.jpg").getPath();
+            Image tmp = new Image(ImageDataFactory.create(tmpPath))
+                    .scaleToFit(60, 60) //
+                    .setHorizontalAlignment(HorizontalAlignment.RIGHT)
+                    .setMarginTop(30);
+            document.add(tmp);
 
             // Close document
             document.close();
@@ -78,19 +95,15 @@ public class GenerationService {
         }
     }
 
-    private List<String> prepareFormData(int id_demande) {
-        List<String> data = new ArrayList<>();
+    private HashMap<String,String> prepareFormData(int id_demande) {
+        HashMap<String,String> data = new HashMap<String,String>();
         Optional<Demandes> formData=demandRepository.findById(id_demande);
 
         // Populate data lines
-        data.add("La Société: " + formData.get().getNom_emetteur());
-        data.add("Forme Juridique: " + formData.get().getPrenom_emetteur());
-        data.add("Capital Social: " + formData.get().getAddress());
-        data.add("Adresse: " + formData.get().getCin());
-        /*data.add("Est inscrit au dit registre depuis le: " + formData.get().getNom_emetteur());
-        data.add("Numéro Chronologique: " + formData.get().getNom_emetteur());
-        data.add("Numéro I.C.E: " + formData.getIce());
-        data.add("Numéro Analytique: " + registerData.getCode());*/
+        data.put("Nom" , formData.get().getNom_emetteur());
+        data.put("Prénom" , formData.get().getPrenom_emetteur());
+        data.put("Adresse" , formData.get().getAddress());
+        data.put("CIN" , formData.get().getCin());
 
         return data;
     }

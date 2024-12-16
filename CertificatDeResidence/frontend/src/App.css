@@ -746,8 +746,10 @@
 }
 .SideBar{
     flex:0 0 300px;
+    width: 300px;
     background-color: rgb(243, 243, 243);
     color: black;
+    position: fixed;
 }
 .SideBar .infos{
     text-align: center;
@@ -826,8 +828,9 @@
     transform: translate(-50%,-50%);
 }
 .outlet{
-    flex: 0 0 calc(100vw - 300px);
+    flex: 0 0 calc(100vw - 325px);
     padding: 25px;
+    margin-left: 300px;
 }
 .demands .header h1{
     font-family: var(--font-big);

@@ -7,7 +7,7 @@ import Waiting from '../Components/Waiting'
 import { useNavigate } from 'react-router-dom'
 import NoDemands from '../Components/NoDemands'
 import { FaX } from 'react-icons/fa6'
-import { changeStatus,getZonesDemands,changeStatusAndMotif } from '../Actions/Demands'
+import { changeStatus,getZonesDemands,changeStatusAndMotif, sendMail } from '../Actions/Demands'
 import Refusbanner from '../Components/Refusbanner'
 
 
@@ -65,9 +65,11 @@ const Affectation = () => {
   }
 
   const handleAccept=async(id_demande)=>{
-      const res=await dispatch(changeStatus(Générer,id_demande))
-      if(res.isUpdated){
-        await dispatch(getZonesDemands("Mqadem"))
+      const res1=await dispatch(sendMail(id_demande))
+      if(res1.isSend){
+        const res2=await dispatch(changeStatus(Générer,id_demande))
+        if(res2.isUpdated)
+          await dispatch(getZonesDemands("Mqadem"))
       }
   }
   const handleRefuse=(id_demand)=>{

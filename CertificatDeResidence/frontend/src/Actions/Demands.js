@@ -1,3 +1,4 @@
+import { IoSend } from "react-icons/io5"
 import { Enquête_en_cours } from "../Utils/Status"
 import { ADD_DEMANDS_FAIL, ADD_DEMANDS_SUCCESS, GET_DEMANDS_FAIL, GET_DEMANDS_SUCCESS,GET_DEMAND_FAIL, GET_DEMAND_SUCCESS } from "./types"
 
@@ -142,4 +143,14 @@ export const changeStatusAndMotif=(status,id_demand,motif)=> async dispatch=>{
     if(data)
         return {isUpdated:true}
     return {isUpdated:false}
+}
+export const sendMail=(id_demand)=> async dispatch=>{
+    const response=await fetch(`${process.env.REACT_APP_SERVER_URI}generate/sendMail/${id_demand}/ayoubakoubri@gmail.com`,{
+        method:'PUT',
+        credentials:'include'
+    })
+    if(!response.ok){
+        return {isSend:false,err:"Une Erreur est survenu"}
+    }
+    return {isSend:true}
 }
