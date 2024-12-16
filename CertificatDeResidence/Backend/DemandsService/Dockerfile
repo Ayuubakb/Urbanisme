@@ -9,6 +9,6 @@ RUN ./mvnw clean install -DskipTests
 
 FROM openjdk:17-jdk-slim
 COPY --from=build /DemandsService/target/DemandsService-SNAPSHOT.jar DemandsService-SNAPSHOT.jar
-EXPOSE 8083
+EXPOSE 8086
 CMD ["java","-jar","DemandsService-SNAPSHOT.jar"]
 
