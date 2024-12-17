@@ -19,39 +19,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE IF EXISTS "Urbanisme";
---
--- TOC entry 4896 (class 1262 OID 16732)
--- Name: Urbanisme; Type: DATABASE; Schema: -; Owner: postgres
---
+DROP DATABASE IF EXISTS Urbanisme_Residence;
 
-CREATE DATABASE "Urbanisme" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'French_Morocco.1252';
+CREATE DATABASE Urbanisme_Residence;
 
+\c Urbanisme_Residence
 
-ALTER DATABASE "Urbanisme" OWNER TO postgres;
-
-\connect "Urbanisme"
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- TOC entry 222 (class 1259 OID 24964)
--- Name: demandes; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.demandes (
     id_demande integer NOT NULL,

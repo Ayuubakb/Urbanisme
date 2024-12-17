@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +45,8 @@ public class GenerationService {
 
             // Set up fonts
             PdfFont timesRoman = PdfFontFactory.createFont();
-            String logoPath = getClass().getClassLoader().getResource("static/logo.jpeg").getPath();
-            Image logo = new Image(ImageDataFactory.create(logoPath))
+            InputStream logoStream = getClass().getClassLoader().getResourceAsStream("static/logo.jpeg");
+            Image logo = new Image(ImageDataFactory.create(logoStream.readAllBytes()))
                     .scaleToFit(130, 130)
                     .setHorizontalAlignment(HorizontalAlignment.CENTER)
                     .setMarginBottom(20);
@@ -74,9 +75,9 @@ public class GenerationService {
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT));
 
-            String tmpPath = getClass().getClassLoader().getResource("static/tamp.jpg").getPath();
-            Image tmp = new Image(ImageDataFactory.create(tmpPath))
-                    .scaleToFit(60, 60) //
+            InputStream tmpStream = getClass().getClassLoader().getResourceAsStream("static/tamp.jpg");
+            Image tmp = new Image(ImageDataFactory.create(tmpStream.readAllBytes()))
+                    .scaleToFit(60, 60)
                     .setHorizontalAlignment(HorizontalAlignment.RIGHT)
                     .setMarginTop(30);
             document.add(tmp);
@@ -102,13 +103,14 @@ public class GenerationService {
 
         return data;
     }
-    public void sendEmailWithPdf(int id_demande, String recipientEmail) {
+    public void sendEmailWithPdf(int id_demande) {
         byte[] pdfContent = generatePdf(id_demande);
+        Optional<Demandes> user=demandRepository.findById(id_demande);
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("bricolini.ensate@gmail.com");
-            helper.setTo(recipientEmail);
+            helper.setTo(user.get().getEmail());
             helper.setSubject("Certificat de Résidence");
             helper.setText("Veuillez trouver en pièce jointe votre certificat de résidence.");
             helper.addAttachment("certificat_residence.pdf",

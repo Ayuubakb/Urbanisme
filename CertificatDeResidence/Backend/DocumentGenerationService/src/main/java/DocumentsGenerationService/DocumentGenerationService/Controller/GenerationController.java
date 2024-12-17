@@ -15,8 +15,8 @@ public class GenerationController {
     @Autowired
     GenerationService generationService;
 
-    @PutMapping("/sendMail/{id}/{email}")
-    public void generate(@PathVariable int id, @PathVariable String email) {
-        generationService.sendEmailWithPdf(id,email);
+    @PutMapping("/sendMail/{id}")
+    public void generate(@PathVariable int id) {
+        generationService.sendEmailWithPdf(id);
     }
 }

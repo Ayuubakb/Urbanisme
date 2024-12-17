@@ -145,7 +145,7 @@ export const changeStatusAndMotif=(status,id_demand,motif)=> async dispatch=>{
     return {isUpdated:false}
 }
 export const sendMail=(id_demand)=> async dispatch=>{
-    const response=await fetch(`${process.env.REACT_APP_SERVER_URI}generate/sendMail/${id_demand}/ayoubakoubri@gmail.com`,{
+    const response=await fetch(`${process.env.REACT_APP_SERVER_URI}generate/sendMail/${id_demand}`,{
         method:'PUT',
         credentials:'include'
     })
