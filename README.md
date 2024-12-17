@@ -112,9 +112,10 @@ Après ces étapes, l'application sera prête à être testée sur votre machine
 https://github.com/user-attachments/assets/4d8e890a-a1a9-43f3-9446-21293c511dd1
 
 **E-mail :**
-![Capture d'écran 2024-12-17 212604](https://github.com/user-attachments/assets/9fcdd330-35a7-4d6b-8754-f8a3ba8b25c7)
 
-![Capture d'écran 2024-12-17 212619](https://github.com/user-attachments/assets/cc29fc74-117a-47c7-aaf6-b5ffc7e182f4)
+- ![Capture d'écran 2024-12-17 212604](https://github.com/user-attachments/assets/9fcdd330-35a7-4d6b-8754-f8a3ba8b25c7)
+
+- ![Capture d'écran 2024-12-17 212619](https://github.com/user-attachments/assets/cc29fc74-117a-47c7-aaf6-b5ffc7e182f4)
 
 - **RC :**
 
