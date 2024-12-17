@@ -22,6 +22,8 @@ const Affectation = () => {
   const [isClosed,setIsClosed]=useState(true)
   const [demandToRefuse,setDemandToRefuse]=useState(null)
   const [motif,setMotif]=useState("")
+  const [isGenerating,setIsGenerating]=useState(false)
+
   useEffect(()=>{
     if(demands){
       let tmp=demands
@@ -65,11 +67,15 @@ const Affectation = () => {
   }
 
   const handleAccept=async(id_demande)=>{
+      setIsGenerating(true)
+      let resFetch=null
       const res1=await dispatch(sendMail(id_demande))
       if(res1.isSend){
         const res2=await dispatch(changeStatus(Générer,id_demande))
         if(res2.isUpdated)
-          await dispatch(getZonesDemands("Mqadem"))
+          resFetch=await dispatch(getZonesDemands("Mqadem"))
+        if(res2.isUpdated!=null && resFetch!=null)
+          setIsGenerating(false)
       }
   }
   const handleRefuse=(id_demand)=>{
@@ -90,7 +96,7 @@ const Affectation = () => {
     return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
   }
 
-  if(demandsState===null)
+  if(demandsState===null || isGenerating)
     return(
       <section className='demands outlet'><Waiting/></section>
     )

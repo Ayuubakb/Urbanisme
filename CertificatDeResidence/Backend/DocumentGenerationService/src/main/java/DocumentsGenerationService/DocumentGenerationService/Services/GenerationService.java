@@ -73,11 +73,6 @@ public class GenerationService {
                     .setFont(timesRoman)
                     .setFontSize(12)
                     .setTextAlignment(TextAlignment.LEFT));
-            // Add footer
-            document.add(new Paragraph("Délivré pour servir et valoir ce que de droit.")
-                    .setFont(timesRoman)
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.LEFT));
 
             String tmpPath = getClass().getClassLoader().getResource("static/tamp.jpg").getPath();
             Image tmp = new Image(ImageDataFactory.create(tmpPath))
