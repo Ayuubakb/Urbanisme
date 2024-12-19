@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./UpdateFormulaire.css";
 import PropTypes from "prop-types";
 import UpdateDocument from "./UpdateDocument";
+import React from 'react';
 
 function UpdateFormulaire({ id }) {
   const navigate = useNavigate();

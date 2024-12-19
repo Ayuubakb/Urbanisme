@@ -21,14 +21,12 @@ import java.util.List;
 @Service
 public class RegisterService {
   private final register_repo registerRepo;
-  private final demande_repo demandeRepo;
   private final formulaire_repo formulaireRepo;
   private final payementRepo paymentRepo;
 
   public RegisterService(register_repo registerRepo, demande_repo demandeRepo,
                          formulaire_repo formulaireRepo, payementRepo paymentRepo) {
     this.registerRepo = registerRepo;
-    this.demandeRepo = demandeRepo;
     this.formulaireRepo = formulaireRepo;
     this.paymentRepo = paymentRepo;
   }

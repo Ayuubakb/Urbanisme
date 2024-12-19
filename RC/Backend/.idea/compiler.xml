@@ -12,6 +12,15 @@
         <module name="AuthenticationService" />
         <module name="GatewayService" />
       </profile>
+      <profile name="Annotation profile for WorkerService" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="WorkerService" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
@@ -20,6 +29,7 @@
       <module name="GatewayService" options="-parameters" />
       <module name="RegistryService" options="-parameters" />
       <module name="UserEspace" options="-parameters" />
+      <module name="WorkerService" options="-parameters" />
     </option>
   </component>
 </project>

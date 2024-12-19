@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateDocument.css';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 function UpdateDocument({ id, isProcuration }) {
     const [documents, setDocuments] = useState({});

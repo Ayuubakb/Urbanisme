@@ -27,7 +27,12 @@ function RegisterListe() {
                 setDemandes(response.data);
                 setError(null);
             } catch (error) {
-                setError('Erreur de connexion au serveur');
+                //check if the error is a 404 error
+                if (error.response && error.response.status === 404) {
+                    setError(null);
+                } else {
+                    setError('Erreur lors de la récupération des demandes payées');
+                }
             } finally {
                 setLoading(false);
             }
