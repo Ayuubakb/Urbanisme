@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaEnvelope, FaEyeSlash, FaLock, FaSignInAlt,FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import './login.css'
+import './Login.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({

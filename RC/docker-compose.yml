@@ -21,6 +21,7 @@ services:
       - registry_service
       - authentication_service
       - user_service
+      - worker_service
   authentication_service:
     container_name: "RC_Auth"
     build: ./Backend/AuthenticationService
@@ -69,6 +70,13 @@ services:
     depends_on:
       - registry_service
       - rcdb
+  frontend:
+    container_name: RcFront
+    build: ./Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - gateway_service
 volumes:
   RC_Volume:
     driver: local

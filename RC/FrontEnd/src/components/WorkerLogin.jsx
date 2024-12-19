@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaEnvelope, FaEyeSlash, FaLock, FaSignInAlt,FaEye } from 'react-icons/fa';
-import './login.css'
+import './Login.css'
 
 function WorkerLogin() {
     const [formData, setFormData] = useState({
