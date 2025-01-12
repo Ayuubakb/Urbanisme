@@ -1,10 +1,3 @@
-
-# 🌐 DIGITAL MAROC  2030
-
-La transformation numérique constitue aujourd’hui un enjeu majeur pour les organisations, tant publiques que privées, dans un contexte où l’agilité, l’efficacité et l’innovation sont devenues des facteurs clés de compétitivité. Au Maroc, cette dynamique est encadrée par la stratégie nationale **Digital Morocco 2030**, qui fixe des objectifs ambitieux pour moderniser les systèmes d’information (SI) et promouvoir l’adoption des technologies numériques
-
-
-
 ## 📋Processus développés
 
 Dans le cadre de la stratégie Digital Morocco 2030, plusieurs améliorations ont été apportées aux **processus d'immatriculation au registre de commerce** *(RCI)* et de **demande d'attestation de résidence** *(ATR)*. Ces changements visent à digitaliser les démarches administratives, les rendant plus rapides, accessibles et transparentes pour les citoyens. 
@@ -121,10 +114,9 @@ https://github.com/user-attachments/assets/4d8e890a-a1a9-43f3-9446-21293c511dd1
 
 https://github.com/user-attachments/assets/86211a7a-c20e-4d5b-98d6-0e321a8b5bc7
 
+## 📄 Report
 
-
-  
-
+- Urbanisme Report : [Urbanisme Report](/Assets/Urabanisme.pdf)
 
 ## Acknowledgements
 
